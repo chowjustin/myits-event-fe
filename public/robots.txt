@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://event.chow.my.id/
+
+# Sitemaps
+Sitemap: https://event.chow.my.id/sitemap.xml
