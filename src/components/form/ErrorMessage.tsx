@@ -1,5 +1,3 @@
-import Typography from "@/components/Typography";
-
 export default function ErrorMessage({
   children,
   className,
@@ -9,13 +7,9 @@ export default function ErrorMessage({
 }) {
   return (
     <div className="flex space-x-1">
-      <Typography
-        as="p"
-        weight="regular"
-        className={`text-xs !leading-tight text-red-500 ${className}`}
-      >
+      <p className={`text-sm !leading-tight text-red-500 ${className}`}>
         {children}
-      </Typography>
+      </p>
     </div>
   );
 }

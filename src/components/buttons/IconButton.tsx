@@ -1,10 +1,10 @@
 import * as React from "react";
-import { IconType } from "react-icons";
-import { ImSpinner } from "react-icons/im";
 
 import clsxm from "@/lib/clsxm";
+import { Loader, LucideIcon } from "lucide-react";
 
 const IconButtonVariant = [
+  "primary",
   "blue",
   "green",
   "yellow",
@@ -18,7 +18,7 @@ type IconButtonProps = {
   isLoading?: boolean;
   variant?: (typeof IconButtonVariant)[number];
   size?: (typeof IconButtonSize)[number];
-  icon?: IconType;
+  icon?: LucideIcon;
   iconClassName?: string;
 } & React.ComponentPropsWithRef<"button">;
 
@@ -28,7 +28,7 @@ const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
       className,
       disabled: buttonDisabled,
       isLoading,
-      variant = "blue",
+      variant = "primary",
       size = "base",
       icon: Icon,
       iconClassName,
@@ -67,6 +67,14 @@ const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
           //#region  //*=========== Variants ===========
           //#region  //*=========== Variants ===========
           [
+            variant === "primary" && [
+              "bg-primary-base text-white",
+              "border border-primary-hover",
+              "hover:bg-primary-hover hover:text-white",
+              "active:bg-primary-active",
+              "disabled:bg-disabled",
+              "focus-visible:ring-primary-base",
+            ],
             variant === "blue" && [
               "bg-blue-500 text-white",
               "border border-blue-600",
@@ -130,7 +138,7 @@ const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
               },
             )}
           >
-            <ImSpinner size={18} className="animate-spin" />
+            <Loader size={18} className="animate-spin" />
           </div>
         )}
         {Icon && <Icon size="1em" className={clsxm(iconClassName)} />}

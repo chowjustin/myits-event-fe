@@ -29,8 +29,8 @@ export default function FormSandbox() {
           return res;
         });
     },
-    onError: (error) => {
-      toast.error(error.message);
+    onError: () => {
+      toast.error("error");
     },
   });
 

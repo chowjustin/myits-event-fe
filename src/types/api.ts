@@ -16,15 +16,17 @@ export interface PaginatedApiResponse<DataType> {
 export type ApiResponse<T> = {
   message: string;
   status: boolean;
-  code: number;
   data: T;
 };
 
-export type ApiError = {
-  code: number;
-  status: boolean | number;
-  message: string;
-};
+export interface ApiError {
+  response?: {
+    data?: {
+      error?: string;
+      message?: string;
+    };
+  };
+}
 
 export type UninterceptedApiError = {
   code: number;

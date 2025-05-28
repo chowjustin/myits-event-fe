@@ -1,12 +1,13 @@
 import * as React from "react";
-import { IconType } from "react-icons";
 
 import UnstyledLink, {
   UnstyledLinkProps,
 } from "@/components/links/UnstyledLink";
 import clsxm from "@/lib/clsxm";
+import { LucideIcon } from "lucide-react";
 
 const ButtonLinkVariant = [
+  "primary",
   "blue",
   "green",
   "yellow",
@@ -19,8 +20,8 @@ const ButtonLinkSize = ["sm", "base", "lg"] as const;
 type ButtonLinkProps = {
   variant?: (typeof ButtonLinkVariant)[number];
   size?: (typeof ButtonLinkSize)[number];
-  leftIcon?: IconType;
-  rightIcon?: IconType;
+  leftIcon?: LucideIcon;
+  rightIcon?: LucideIcon;
   leftIconClassName?: string;
   rightIconClassName?: string;
 } & UnstyledLinkProps;
@@ -30,7 +31,7 @@ const ButtonLink = React.forwardRef<HTMLAnchorElement, ButtonLinkProps>(
     {
       children,
       className,
-      variant = "blue",
+      variant = "primary",
       size = "base",
       leftIcon: LeftIcon,
       rightIcon: RightIcon,
@@ -52,21 +53,29 @@ const ButtonLink = React.forwardRef<HTMLAnchorElement, ButtonLinkProps>(
           //#region  //*=========== Size ===========
           [
             size === "lg" && [
-              "min-h-[2.75rem] px-3.5 md:min-h-[3rem]",
+              "min-h-[2.5rem] px-3.5 md:min-h-[2.75rem]",
               "text-base",
             ],
             size === "base" && [
-              "min-h-[2.25rem] px-3 md:min-h-[2.5rem]",
+              "min-h-[2rem] px-3 md:min-h-[2.25rem]",
               "text-sm md:text-base",
             ],
             size === "sm" && [
-              "min-h-[1.75rem] px-2 md:min-h-[2rem]",
+              "min-h-[1.5rem] px-2 md:min-h-[1.75rem]",
               "text-xs md:text-sm",
             ],
           ],
           //#endregion  //*======== Size ===========
           //#region  //*=========== Variants ===========
           [
+            variant === "primary" && [
+              "bg-primary-base text-white",
+              "border border-primary-hover",
+              "hover:bg-primary-hover hover:text-white",
+              "active:bg-primary-active",
+              "disabled:bg-disabled",
+              "focus-visible:ring-primary-base",
+            ],
             variant === "blue" && [
               "bg-blue-500 text-white",
               "border border-blue-600",

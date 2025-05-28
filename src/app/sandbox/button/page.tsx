@@ -1,5 +1,4 @@
-import { BiPlus } from "react-icons/bi";
-import { BsArrowRight } from "react-icons/bs";
+import { ArrowRight, Plus } from "lucide-react";
 
 import Typography from "@/components/Typography";
 import Button from "@/components/buttons/Button";
@@ -10,26 +9,24 @@ export default function ButtonPage() {
     <main className="min-h-screen items-center justify-center bg-slate-200 py-20">
       <section className="flex flex-col gap-8 px-24">
         <div>
-          <Typography as="h2" variant="h2">
-            Blue
-          </Typography>
+          <Typography as="h2">Blue</Typography>
           <div className="mt-3 flex flex-wrap items-end gap-3">
             <Button
               variant="blue"
               size="lg"
-              leftIcon={BiPlus}
-              rightIcon={BsArrowRight}
+              leftIcon={Plus}
+              rightIcon={ArrowRight}
             >
               Blue Button
             </Button>
-            <Button variant="blue" leftIcon={BiPlus} rightIcon={BsArrowRight}>
+            <Button variant="blue" leftIcon={Plus} rightIcon={ArrowRight}>
               Blue Button
             </Button>
             <Button
               variant="blue"
               size="sm"
-              leftIcon={BiPlus}
-              rightIcon={BsArrowRight}
+              leftIcon={Plus}
+              rightIcon={ArrowRight}
             >
               Blue Button
             </Button>
@@ -38,16 +35,16 @@ export default function ButtonPage() {
             <Button
               variant="blue"
               size="lg"
-              leftIcon={BiPlus}
-              rightIcon={BsArrowRight}
+              leftIcon={Plus}
+              rightIcon={ArrowRight}
               disabled
             >
               Blue Disabled
             </Button>
             <Button
               variant="blue"
-              leftIcon={BiPlus}
-              rightIcon={BsArrowRight}
+              leftIcon={Plus}
+              rightIcon={ArrowRight}
               disabled
             >
               Blue Disabled
@@ -55,8 +52,8 @@ export default function ButtonPage() {
             <Button
               variant="blue"
               size="sm"
-              leftIcon={BiPlus}
-              rightIcon={BsArrowRight}
+              leftIcon={Plus}
+              rightIcon={ArrowRight}
               disabled
             >
               Blue Disabled
@@ -66,16 +63,16 @@ export default function ButtonPage() {
             <Button
               variant="blue"
               size="lg"
-              leftIcon={BiPlus}
-              rightIcon={BsArrowRight}
+              leftIcon={Plus}
+              rightIcon={ArrowRight}
               isLoading
             >
               Blue Disabled
             </Button>
             <Button
               variant="blue"
-              leftIcon={BiPlus}
-              rightIcon={BsArrowRight}
+              leftIcon={Plus}
+              rightIcon={ArrowRight}
               isLoading
             >
               Blue Disabled
@@ -83,8 +80,8 @@ export default function ButtonPage() {
             <Button
               variant="blue"
               size="sm"
-              leftIcon={BiPlus}
-              rightIcon={BsArrowRight}
+              leftIcon={Plus}
+              rightIcon={ArrowRight}
               isLoading
             >
               Blue Disabled
@@ -93,26 +90,24 @@ export default function ButtonPage() {
         </div>
 
         <div>
-          <Typography as="h2" variant="h2">
-            Green
-          </Typography>
+          <Typography as="h2">Green</Typography>
           <div className="mt-3 flex flex-wrap items-end gap-3">
             <Button
               variant="green"
               size="lg"
-              leftIcon={BiPlus}
-              rightIcon={BsArrowRight}
+              leftIcon={Plus}
+              rightIcon={ArrowRight}
             >
               Green Button
             </Button>
-            <Button variant="green" leftIcon={BiPlus} rightIcon={BsArrowRight}>
+            <Button variant="green" leftIcon={Plus} rightIcon={ArrowRight}>
               Green Button
             </Button>
             <Button
               variant="green"
               size="sm"
-              leftIcon={BiPlus}
-              rightIcon={BsArrowRight}
+              leftIcon={Plus}
+              rightIcon={ArrowRight}
             >
               Green Button
             </Button>
@@ -121,16 +116,16 @@ export default function ButtonPage() {
             <Button
               variant="green"
               size="lg"
-              leftIcon={BiPlus}
-              rightIcon={BsArrowRight}
+              leftIcon={Plus}
+              rightIcon={ArrowRight}
               disabled
             >
               Green Disabled
             </Button>
             <Button
               variant="green"
-              leftIcon={BiPlus}
-              rightIcon={BsArrowRight}
+              leftIcon={Plus}
+              rightIcon={ArrowRight}
               disabled
             >
               Green Disabled
@@ -138,8 +133,8 @@ export default function ButtonPage() {
             <Button
               variant="green"
               size="sm"
-              leftIcon={BiPlus}
-              rightIcon={BsArrowRight}
+              leftIcon={Plus}
+              rightIcon={ArrowRight}
               disabled
             >
               Green Disabled
@@ -149,16 +144,16 @@ export default function ButtonPage() {
             <Button
               variant="green"
               size="lg"
-              leftIcon={BiPlus}
-              rightIcon={BsArrowRight}
+              leftIcon={Plus}
+              rightIcon={ArrowRight}
               isLoading
             >
               Green Disabled
             </Button>
             <Button
               variant="green"
-              leftIcon={BiPlus}
-              rightIcon={BsArrowRight}
+              leftIcon={Plus}
+              rightIcon={ArrowRight}
               isLoading
             >
               Green Disabled
@@ -166,119 +161,115 @@ export default function ButtonPage() {
             <Button
               variant="green"
               size="sm"
-              leftIcon={BiPlus}
-              rightIcon={BsArrowRight}
+              leftIcon={Plus}
+              rightIcon={ArrowRight}
               isLoading
             >
               Green Disabled
-            </Button>
-          </div>
-        </div>
-
-        <div>
-          <Typography as="h2" variant="h2">
-            Yellow
-          </Typography>
-          <div className="mt-3 flex flex-wrap items-end gap-3">
-            <Button
-              variant="yellow"
-              size="lg"
-              leftIcon={BiPlus}
-              rightIcon={BsArrowRight}
-            >
-              Yellow Button
-            </Button>
-            <Button variant="yellow" leftIcon={BiPlus} rightIcon={BsArrowRight}>
-              Yellow Button
-            </Button>
-            <Button
-              variant="yellow"
-              size="sm"
-              leftIcon={BiPlus}
-              rightIcon={BsArrowRight}
-            >
-              Yellow Button
-            </Button>
-          </div>
-          <div className="mt-3 flex flex-wrap items-end gap-3">
-            <Button
-              variant="yellow"
-              size="lg"
-              leftIcon={BiPlus}
-              rightIcon={BsArrowRight}
-              disabled
-            >
-              Yellow Disabled
-            </Button>
-            <Button
-              variant="yellow"
-              leftIcon={BiPlus}
-              rightIcon={BsArrowRight}
-              disabled
-            >
-              Yellow Disabled
-            </Button>
-            <Button
-              variant="yellow"
-              size="sm"
-              leftIcon={BiPlus}
-              rightIcon={BsArrowRight}
-              disabled
-            >
-              Yellow Disabled
-            </Button>
-          </div>
-          <div className="mt-3 flex flex-wrap items-end gap-3">
-            <Button
-              variant="yellow"
-              size="lg"
-              leftIcon={BiPlus}
-              rightIcon={BsArrowRight}
-              isLoading
-            >
-              Yellow Disabled
-            </Button>
-            <Button
-              variant="yellow"
-              leftIcon={BiPlus}
-              rightIcon={BsArrowRight}
-              isLoading
-            >
-              Yellow Disabled
-            </Button>
-            <Button
-              variant="yellow"
-              size="sm"
-              leftIcon={BiPlus}
-              rightIcon={BsArrowRight}
-              isLoading
-            >
-              Yellow Disabled
             </Button>
           </div>
         </div>
 
         <div>
-          <Typography as="h2" variant="h2">
-            Red
-          </Typography>
+          <Typography as="h2">Yellow</Typography>
+          <div className="mt-3 flex flex-wrap items-end gap-3">
+            <Button
+              variant="yellow"
+              size="lg"
+              leftIcon={Plus}
+              rightIcon={ArrowRight}
+            >
+              Yellow Button
+            </Button>
+            <Button variant="yellow" leftIcon={Plus} rightIcon={ArrowRight}>
+              Yellow Button
+            </Button>
+            <Button
+              variant="yellow"
+              size="sm"
+              leftIcon={Plus}
+              rightIcon={ArrowRight}
+            >
+              Yellow Button
+            </Button>
+          </div>
+          <div className="mt-3 flex flex-wrap items-end gap-3">
+            <Button
+              variant="yellow"
+              size="lg"
+              leftIcon={Plus}
+              rightIcon={ArrowRight}
+              disabled
+            >
+              Yellow Disabled
+            </Button>
+            <Button
+              variant="yellow"
+              leftIcon={Plus}
+              rightIcon={ArrowRight}
+              disabled
+            >
+              Yellow Disabled
+            </Button>
+            <Button
+              variant="yellow"
+              size="sm"
+              leftIcon={Plus}
+              rightIcon={ArrowRight}
+              disabled
+            >
+              Yellow Disabled
+            </Button>
+          </div>
+          <div className="mt-3 flex flex-wrap items-end gap-3">
+            <Button
+              variant="yellow"
+              size="lg"
+              leftIcon={Plus}
+              rightIcon={ArrowRight}
+              isLoading
+            >
+              Yellow Disabled
+            </Button>
+            <Button
+              variant="yellow"
+              leftIcon={Plus}
+              rightIcon={ArrowRight}
+              isLoading
+            >
+              Yellow Disabled
+            </Button>
+            <Button
+              variant="yellow"
+              size="sm"
+              leftIcon={Plus}
+              rightIcon={ArrowRight}
+              isLoading
+            >
+              Yellow Disabled
+            </Button>
+          </div>
+        </div>
+
+        <div>
+          <Typography as="h2">Red</Typography>
           <div className="mt-3 flex flex-wrap items-end gap-3">
             <Button
               variant="red"
               size="lg"
-              leftIcon={BiPlus}
-              rightIcon={BsArrowRight}
+              leftIcon={Plus}
+              rightIcon={ArrowRight}
             >
               Red Button
             </Button>
-            <Button variant="red" leftIcon={BiPlus} rightIcon={BsArrowRight}>
+            <Button variant="red" leftIcon={Plus} rightIcon={ArrowRight}>
               Red Button
             </Button>
             <Button
               variant="red"
               size="sm"
-              leftIcon={BiPlus}
-              rightIcon={BsArrowRight}
+              leftIcon={Plus}
+              rightIcon={ArrowRight}
             >
               Red Button
             </Button>
@@ -287,16 +278,16 @@ export default function ButtonPage() {
             <Button
               variant="red"
               size="lg"
-              leftIcon={BiPlus}
-              rightIcon={BsArrowRight}
+              leftIcon={Plus}
+              rightIcon={ArrowRight}
               disabled
             >
               Red Disabled
             </Button>
             <Button
               variant="red"
-              leftIcon={BiPlus}
-              rightIcon={BsArrowRight}
+              leftIcon={Plus}
+              rightIcon={ArrowRight}
               disabled
             >
               Red Disabled
@@ -304,8 +295,8 @@ export default function ButtonPage() {
             <Button
               variant="red"
               size="sm"
-              leftIcon={BiPlus}
-              rightIcon={BsArrowRight}
+              leftIcon={Plus}
+              rightIcon={ArrowRight}
               disabled
             >
               Red Disabled
@@ -315,16 +306,16 @@ export default function ButtonPage() {
             <Button
               variant="red"
               size="lg"
-              leftIcon={BiPlus}
-              rightIcon={BsArrowRight}
+              leftIcon={Plus}
+              rightIcon={ArrowRight}
               isLoading
             >
               Red Disabled
             </Button>
             <Button
               variant="red"
-              leftIcon={BiPlus}
-              rightIcon={BsArrowRight}
+              leftIcon={Plus}
+              rightIcon={ArrowRight}
               isLoading
             >
               Red Disabled
@@ -332,8 +323,8 @@ export default function ButtonPage() {
             <Button
               variant="red"
               size="sm"
-              leftIcon={BiPlus}
-              rightIcon={BsArrowRight}
+              leftIcon={Plus}
+              rightIcon={ArrowRight}
               isLoading
             >
               Red Disabled
@@ -342,30 +333,24 @@ export default function ButtonPage() {
         </div>
 
         <div>
-          <Typography as="h2" variant="h2">
-            Outline
-          </Typography>
+          <Typography as="h2">Outline</Typography>
           <div className="mt-3 flex flex-wrap items-end gap-3">
             <Button
               variant="outline"
               size="lg"
-              leftIcon={BiPlus}
-              rightIcon={BsArrowRight}
+              leftIcon={Plus}
+              rightIcon={ArrowRight}
             >
               Outline Button
             </Button>
-            <Button
-              variant="outline"
-              leftIcon={BiPlus}
-              rightIcon={BsArrowRight}
-            >
+            <Button variant="outline" leftIcon={Plus} rightIcon={ArrowRight}>
               Outline Button
             </Button>
             <Button
               variant="outline"
               size="sm"
-              leftIcon={BiPlus}
-              rightIcon={BsArrowRight}
+              leftIcon={Plus}
+              rightIcon={ArrowRight}
             >
               Outline Button
             </Button>
@@ -374,16 +359,16 @@ export default function ButtonPage() {
             <Button
               variant="outline"
               size="lg"
-              leftIcon={BiPlus}
-              rightIcon={BsArrowRight}
+              leftIcon={Plus}
+              rightIcon={ArrowRight}
               disabled
             >
               Outline Disabled
             </Button>
             <Button
               variant="outline"
-              leftIcon={BiPlus}
-              rightIcon={BsArrowRight}
+              leftIcon={Plus}
+              rightIcon={ArrowRight}
               disabled
             >
               Outline Disabled
@@ -391,8 +376,8 @@ export default function ButtonPage() {
             <Button
               variant="outline"
               size="sm"
-              leftIcon={BiPlus}
-              rightIcon={BsArrowRight}
+              leftIcon={Plus}
+              rightIcon={ArrowRight}
               disabled
             >
               Outline Disabled
@@ -402,16 +387,16 @@ export default function ButtonPage() {
             <Button
               variant="outline"
               size="lg"
-              leftIcon={BiPlus}
-              rightIcon={BsArrowRight}
+              leftIcon={Plus}
+              rightIcon={ArrowRight}
               isLoading
             >
               Outline Disabled
             </Button>
             <Button
               variant="outline"
-              leftIcon={BiPlus}
-              rightIcon={BsArrowRight}
+              leftIcon={Plus}
+              rightIcon={ArrowRight}
               isLoading
             >
               Outline Disabled
@@ -419,8 +404,8 @@ export default function ButtonPage() {
             <Button
               variant="outline"
               size="sm"
-              leftIcon={BiPlus}
-              rightIcon={BsArrowRight}
+              leftIcon={Plus}
+              rightIcon={ArrowRight}
               isLoading
             >
               Outline Disabled
@@ -429,18 +414,16 @@ export default function ButtonPage() {
         </div>
 
         <div>
-          <Typography as="h2" variant="h2">
-            Ghost
-          </Typography>
+          <Typography as="h2">Ghost</Typography>
           <div className="mt-3 flex flex-wrap items-end gap-3">
-            <Button variant="ghost" leftIcon={BiPlus} rightIcon={BsArrowRight}>
+            <Button variant="ghost" leftIcon={Plus} rightIcon={ArrowRight}>
               Ghost Button
             </Button>
             <Button
               variant="ghost"
               size="sm"
-              leftIcon={BiPlus}
-              rightIcon={BsArrowRight}
+              leftIcon={Plus}
+              rightIcon={ArrowRight}
             >
               Ghost Button
             </Button>
@@ -448,8 +431,8 @@ export default function ButtonPage() {
           <div className="mt-3 flex flex-wrap items-end gap-3">
             <Button
               variant="ghost"
-              leftIcon={BiPlus}
-              rightIcon={BsArrowRight}
+              leftIcon={Plus}
+              rightIcon={ArrowRight}
               disabled
             >
               Ghost Disabled
@@ -457,8 +440,8 @@ export default function ButtonPage() {
             <Button
               variant="ghost"
               size="sm"
-              leftIcon={BiPlus}
-              rightIcon={BsArrowRight}
+              leftIcon={Plus}
+              rightIcon={ArrowRight}
               disabled
             >
               Ghost Disabled
@@ -467,8 +450,8 @@ export default function ButtonPage() {
           <div className="mt-3 flex flex-wrap items-end gap-3">
             <Button
               variant="ghost"
-              leftIcon={BiPlus}
-              rightIcon={BsArrowRight}
+              leftIcon={Plus}
+              rightIcon={ArrowRight}
               isLoading
             >
               Ghost Disabled
@@ -476,8 +459,8 @@ export default function ButtonPage() {
             <Button
               variant="ghost"
               size="sm"
-              leftIcon={BiPlus}
-              rightIcon={BsArrowRight}
+              leftIcon={Plus}
+              rightIcon={ArrowRight}
               isLoading
             >
               Ghost Disabled
@@ -486,24 +469,22 @@ export default function ButtonPage() {
         </div>
 
         <div>
-          <Typography as="h2" variant="h2">
-            Button Link
-          </Typography>
+          <Typography as="h2">Button Link</Typography>
           <div className="mt-3 flex flex-wrap items-end gap-3">
             <ButtonLink
               href="/"
               variant="blue"
               size="lg"
-              leftIcon={BiPlus}
-              rightIcon={BsArrowRight}
+              leftIcon={Plus}
+              rightIcon={ArrowRight}
             >
               Button Link
             </ButtonLink>
             <ButtonLink
               href="/"
               variant="blue"
-              leftIcon={BiPlus}
-              rightIcon={BsArrowRight}
+              leftIcon={Plus}
+              rightIcon={ArrowRight}
             >
               Button Link
             </ButtonLink>
@@ -511,8 +492,8 @@ export default function ButtonPage() {
               href="/"
               variant="blue"
               size="sm"
-              leftIcon={BiPlus}
-              rightIcon={BsArrowRight}
+              leftIcon={Plus}
+              rightIcon={ArrowRight}
             >
               Button Link
             </ButtonLink>
@@ -522,16 +503,16 @@ export default function ButtonPage() {
               href="/"
               variant="green"
               size="lg"
-              leftIcon={BiPlus}
-              rightIcon={BsArrowRight}
+              leftIcon={Plus}
+              rightIcon={ArrowRight}
             >
               Green Button Link
             </ButtonLink>
             <ButtonLink
               href="/"
               variant="green"
-              leftIcon={BiPlus}
-              rightIcon={BsArrowRight}
+              leftIcon={Plus}
+              rightIcon={ArrowRight}
             >
               Green Button Link
             </ButtonLink>
@@ -539,8 +520,8 @@ export default function ButtonPage() {
               href="/"
               variant="green"
               size="sm"
-              leftIcon={BiPlus}
-              rightIcon={BsArrowRight}
+              leftIcon={Plus}
+              rightIcon={ArrowRight}
             >
               Green Button Link
             </ButtonLink>
@@ -550,16 +531,16 @@ export default function ButtonPage() {
               href="/"
               variant="outline"
               size="lg"
-              leftIcon={BiPlus}
-              rightIcon={BsArrowRight}
+              leftIcon={Plus}
+              rightIcon={ArrowRight}
             >
               Outline Button Link
             </ButtonLink>
             <ButtonLink
               href="/"
               variant="outline"
-              leftIcon={BiPlus}
-              rightIcon={BsArrowRight}
+              leftIcon={Plus}
+              rightIcon={ArrowRight}
             >
               Outline Button Link
             </ButtonLink>
@@ -567,8 +548,8 @@ export default function ButtonPage() {
               href="/"
               variant="outline"
               size="sm"
-              leftIcon={BiPlus}
-              rightIcon={BsArrowRight}
+              leftIcon={Plus}
+              rightIcon={ArrowRight}
             >
               Outline Button Link
             </ButtonLink>
@@ -578,16 +559,16 @@ export default function ButtonPage() {
               href="/"
               variant="yellow"
               size="lg"
-              leftIcon={BiPlus}
-              rightIcon={BsArrowRight}
+              leftIcon={Plus}
+              rightIcon={ArrowRight}
             >
               Yellow Button Link
             </ButtonLink>
             <ButtonLink
               href="/"
               variant="yellow"
-              leftIcon={BiPlus}
-              rightIcon={BsArrowRight}
+              leftIcon={Plus}
+              rightIcon={ArrowRight}
             >
               Yellow Button Link
             </ButtonLink>
@@ -595,8 +576,8 @@ export default function ButtonPage() {
               href="/"
               variant="yellow"
               size="sm"
-              leftIcon={BiPlus}
-              rightIcon={BsArrowRight}
+              leftIcon={Plus}
+              rightIcon={ArrowRight}
             >
               Yellow Button Link
             </ButtonLink>
@@ -606,16 +587,16 @@ export default function ButtonPage() {
               href="/"
               variant="ghost"
               size="lg"
-              leftIcon={BiPlus}
-              rightIcon={BsArrowRight}
+              leftIcon={Plus}
+              rightIcon={ArrowRight}
             >
               Ghost Button Link
             </ButtonLink>
             <ButtonLink
               href="/"
               variant="ghost"
-              leftIcon={BiPlus}
-              rightIcon={BsArrowRight}
+              leftIcon={Plus}
+              rightIcon={ArrowRight}
             >
               Ghost Button Link
             </ButtonLink>
@@ -623,8 +604,8 @@ export default function ButtonPage() {
               href="/"
               variant="ghost"
               size="sm"
-              leftIcon={BiPlus}
-              rightIcon={BsArrowRight}
+              leftIcon={Plus}
+              rightIcon={ArrowRight}
             >
               Ghost Button Link
             </ButtonLink>

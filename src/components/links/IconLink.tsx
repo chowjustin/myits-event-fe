@@ -1,10 +1,10 @@
 import * as React from "react";
-import { IconType } from "react-icons";
 
 import UnstyledLink, {
   UnstyledLinkProps,
 } from "@/components/links/UnstyledLink";
 import clsxm from "@/lib/clsxm";
+import { LucideIcon } from "lucide-react";
 
 const IconLinkVariant = [
   "blue",
@@ -19,7 +19,7 @@ const IconLinkSize = ["xs", "sm", "base", "lg"] as const;
 type IconLinkProps = {
   variant?: (typeof IconLinkVariant)[number];
   size?: (typeof IconLinkSize)[number];
-  icon?: IconType;
+  icon?: LucideIcon;
   iconClassName?: string;
 } & Omit<UnstyledLinkProps, "children">;
 

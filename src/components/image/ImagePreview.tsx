@@ -1,9 +1,8 @@
 import "yet-another-react-lightbox/styles.css";
 import "yet-another-react-lightbox/plugins/captions.css";
-
 import Image from "next/legacy/image";
 import * as React from "react";
-import { HiOutlineExternalLink } from "react-icons/hi";
+import { ExternalLink } from "lucide-react";
 import Lightbox from "yet-another-react-lightbox";
 import Captions from "yet-another-react-lightbox/plugins/captions";
 import Download from "yet-another-react-lightbox/plugins/download";
@@ -41,7 +40,7 @@ const ImagePreview = ({
               <IconLink
                 href={imgSrc}
                 variant={undefined}
-                icon={HiOutlineExternalLink}
+                icon={ExternalLink}
                 size="sm"
                 iconClassName="text-typo-primary"
               />

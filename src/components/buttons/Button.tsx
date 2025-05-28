@@ -1,10 +1,10 @@
 import * as React from "react";
-import { IconType } from "react-icons";
-import { ImSpinner } from "react-icons/im";
+import { Loader, LucideIcon } from "lucide-react";
 
 import clsxm from "@/lib/clsxm";
 
 const ButtonVariant = [
+  "primary",
   "blue",
   "green",
   "yellow",
@@ -18,8 +18,8 @@ type ButtonProps = {
   isLoading?: boolean;
   variant?: (typeof ButtonVariant)[number];
   size?: (typeof ButtonSize)[number];
-  leftIcon?: IconType;
-  rightIcon?: IconType;
+  leftIcon?: LucideIcon;
+  rightIcon?: LucideIcon;
   leftIconClassName?: string;
   rightIconClassName?: string;
 } & React.ComponentPropsWithRef<"button">;
@@ -31,7 +31,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       className,
       disabled: buttonDisabled,
       isLoading,
-      variant = "blue",
+      variant = "primary",
       size = "base",
       leftIcon: LeftIcon,
       rightIcon: RightIcon,
@@ -56,21 +56,29 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           //#region  //*=========== Size ===========
           [
             size === "lg" && [
-              "min-h-[2.75rem] px-3.5 md:min-h-[3rem]",
+              "min-h-[2.5rem] px-3.5 md:min-h-[2.75rem]",
               "text-base",
             ],
             size === "base" && [
-              "min-h-[2.25rem] px-3 md:min-h-[2.5rem]",
+              "min-h-[2rem] px-3 md:min-h-[2.25rem]",
               "text-sm md:text-base",
             ],
             size === "sm" && [
-              "min-h-[1.75rem] px-2 md:min-h-[2rem]",
+              "min-h-[1.5rem] px-2 md:min-h-[1.75rem]",
               "text-xs md:text-sm",
             ],
           ],
           //#endregion  //*======== Size ===========
           //#region  //*=========== Variants ===========
           [
+            variant === "primary" && [
+              "bg-primary-base text-white",
+              "border border-primary-hover",
+              "hover:bg-primary-hover hover:text-white",
+              "active:bg-primary-active",
+              "disabled:bg-disabled",
+              "focus-visible:ring-primary-base",
+            ],
             variant === "blue" && [
               "bg-blue-500 text-white",
               "border border-blue-600",
@@ -127,14 +135,18 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
             className={clsxm(
               "absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2",
               {
-                "text-white": ["blue", "green", "red", "yellow"].includes(
-                  variant,
-                ),
+                "text-white": [
+                  "primary",
+                  "blue",
+                  "green",
+                  "red",
+                  "yellow",
+                ].includes(variant),
                 "text-blue-500": ["outline", "ghost"].includes(variant),
               },
             )}
           >
-            <ImSpinner size={18} className="animate-spin" />
+            <Loader size={18} className="animate-spin" />
           </div>
         )}
         {LeftIcon && (

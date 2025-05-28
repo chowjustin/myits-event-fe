@@ -1,6 +1,4 @@
 import { ReactNode } from "react";
-
-import Typography from "@/components/Typography";
 import clsxm from "@/lib/clsxm";
 
 export default function LabelText({
@@ -13,15 +11,10 @@ export default function LabelText({
   required?: boolean;
 }) {
   return (
-    <label>
-      <Typography
-        as="p"
-        variant="p"
-        weight="bold"
-        className={clsxm("text-xs text-gray-900", labelTextClasname)}
-      >
-        {children} {required && <span className="text-red-500">*</span>}
-      </Typography>
+    <label
+      className={clsxm("text-md font-bold text-gray-900", labelTextClasname)}
+    >
+      {children} {required && <span className="text-red-500">*</span>}
     </label>
   );
 }

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { RegisterOptions, get, useFormContext } from "react-hook-form";
+import { get, RegisterOptions, useFormContext } from "react-hook-form";
 import { IconType } from "react-icons";
 import { HiEye, HiEyeOff } from "react-icons/hi";
 
@@ -51,7 +51,7 @@ export default function Input({
   const error = get(errors, id);
 
   return (
-    <div className="w-full space-y-2">
+    <div className="w-full space-y-1">
       {label && (
         <LabelText required={validation?.required ? true : false}>
           {label}
