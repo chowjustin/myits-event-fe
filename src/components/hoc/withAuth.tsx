@@ -10,7 +10,7 @@ import Loading from "@/app/loading";
 import api from "@/lib/api";
 import { ApiResponse } from "@/types/api";
 
-const ROLE = ["user", "ormawa", "departemen"] as const;
+const ROLE = ["user", "ormawa", "departemen", "admin"] as const;
 
 type Role = (typeof ROLE)[number];
 
@@ -20,7 +20,8 @@ export interface WithAuthProps {
 
 const DEPARTEMEN_ROUTE = "/dashboard";
 const ORMAWA_ROUTE = "/dashboard";
-const USER_ROUTE = "/dashboard";
+const ADMIN_ROUTE = "/admin";
+const USER_ROUTE = "/";
 
 const LOGIN_ROUTE = "/login";
 
@@ -29,6 +30,7 @@ export enum RouteRole {
   user,
   ormawa,
   departemen,
+  admin,
 }
 
 export const isRole = (p: Role): p is Role => ROLE.includes(p as Role);
@@ -37,13 +39,15 @@ const hasAccess = (
   userRole: Role,
   routeRole: keyof typeof RouteRole,
 ): boolean => {
-  if (userRole === "departemen") return true;
+  if (userRole === "admin") return true;
 
   switch (userRole) {
     case "user":
       return routeRole === "user" || routeRole === "public";
     case "ormawa":
       return routeRole === "ormawa" || routeRole === "public";
+    case "departemen":
+      return routeRole === "departemen" || routeRole === "public";
 
     default:
       return false;
@@ -58,6 +62,8 @@ const getDefaultRoute = (role: Role): string => {
       return ORMAWA_ROUTE;
     case "user":
       return USER_ROUTE;
+    case "admin":
+      return ADMIN_ROUTE;
     default:
       return LOGIN_ROUTE;
   }
@@ -99,7 +105,6 @@ export default function withAuth<T>(
         const loadUser = async () => {
           try {
             const res = await api.get<ApiResponse<User>>("/auth/me");
-
             if (!res.data.data) {
               toast.error("Sesi login tidak valid");
               throw new Error("Sesi login tidak valid");
