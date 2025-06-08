@@ -3,7 +3,7 @@ User-agent: *
 Allow: /
 
 # Host
-Host: 'http://localhost:3000/' # Site URL
+Host: 'https://event.chow.my.id/' # Site URL
 
 # Sitemaps
-Sitemap: 'http://localhost:3000/' # Site URL/sitemap.xml
+Sitemap: 'https://event.chow.my.id/' # Site URL/sitemap.xml

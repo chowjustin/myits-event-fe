@@ -53,7 +53,7 @@ function ProfilePage() {
   }
 
   return (
-    <section className="px-8 py-4 max-md:py-4 max-lg:px-0 space-y-6">
+    <section className="space-y-6">
       <div>
         <div className="">
           <BreadCrumbs breadcrumbs={breadCrumbs} />

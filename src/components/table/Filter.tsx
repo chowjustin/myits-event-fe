@@ -1,9 +1,8 @@
 import { RowData, Table } from "@tanstack/react-table";
 import * as React from "react";
-import { IoClose } from "react-icons/io5";
 
 import clsxm from "@/lib/clsxm";
-import { FiSearch } from "react-icons/fi";
+import { Search, X } from "lucide-react";
 
 type FilterProps<T extends RowData> = {
   table: Table<T>;
@@ -33,7 +32,7 @@ export default function Filter<T extends RowData>({
   return (
     <div className={clsxm("relative", className)} {...rest}>
       <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-        <FiSearch className="text-xl text-base-secondary" size="1em" />
+        <Search className="text-xl text-base-secondary" size="1em" />
       </div>
       <input
         type="text"
@@ -52,7 +51,7 @@ export default function Filter<T extends RowData>({
       {table.getState().globalFilter !== "" && (
         <div className="absolute inset-y-0 right-0 flex items-center pr-3">
           <button type="button" onClick={handleClearFilter} className="p-1">
-            <IoClose className="text-xl text-typo-main" />
+            <X className="text-xl text-typo-main" />
           </button>
         </div>
       )}

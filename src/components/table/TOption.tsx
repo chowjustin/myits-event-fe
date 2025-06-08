@@ -33,7 +33,7 @@ export default function TOption({
         placeholder={placeholder}
         defaultValue={options[0]}
         isSearchable={false}
-        className={"mt-1 w-36"}
+        className={"mt-1 min-w-[100px] z-50"}
         styles={{
           indicatorSeparator: () => ({}),
           dropdownIndicator: (baseStyles, state) => ({
@@ -59,10 +59,13 @@ export default function TOption({
           }),
           option: (style, state) => ({
             ...style,
-            backgroundColor: state.isSelected ? "#046376" : "white",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            whiteSpace: "nowrap",
+            backgroundColor: state.isSelected ? "#8a3028" : "white",
             "&:hover": {
               cursor: "pointer",
-              backgroundColor: state.isSelected ? "#046376" : "#E5E5E6",
+              backgroundColor: state.isSelected ? "#8a3028" : "#E5E5E6",
             },
           }),
         }}

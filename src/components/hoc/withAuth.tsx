@@ -45,9 +45,15 @@ const hasAccess = (
     case "user":
       return routeRole === "user" || routeRole === "public";
     case "ormawa":
-      return routeRole === "ormawa" || routeRole === "public";
+      return (
+        routeRole === "ormawa" || routeRole === "user" || routeRole === "public"
+      );
     case "departemen":
-      return routeRole === "departemen" || routeRole === "public";
+      return (
+        routeRole === "departemen" ||
+        routeRole === "user" ||
+        routeRole === "public"
+      );
 
     default:
       return false;

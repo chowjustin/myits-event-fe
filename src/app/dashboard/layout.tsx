@@ -3,10 +3,14 @@
 import Sidebar from "@/app/layouts/Sidebar";
 import { ReactNode } from "react";
 import {
+  Calendar,
   CircleUserRound,
+  DoorOpen,
   House,
   LucideIcon,
   PencilLine,
+  School,
+  University,
   Users,
 } from "lucide-react";
 import useAuthStore from "../stores/useAuthStore";
@@ -36,27 +40,63 @@ const ChildrenLayout = ({ children }: ChildrenLayoutProps) => {
       link: `/dashboard/profile`,
     },
     {
+      title: "Departemen",
+      icon: University,
+      link: `/dashboard/department`,
+    },
+    {
+      title: "Ruangan",
+      icon: DoorOpen,
+      link: `/dashboard/room`,
+    },
+    {
+      title: "Organisasi",
+      icon: School,
+      link: `/dashboard/organization`,
+    },
+    {
       title: "Event",
       icon: PencilLine,
       link: "/dashboard/event",
     },
     {
-      title: "Ruangan",
+      title: "Undangan",
+      icon: Calendar,
+      link: "/dashboard/invitation",
+    },
+    {
+      title: "Akun",
       icon: Users,
-      link: "/dashboard/rooms",
+      link: "/dashboard/account",
     },
   ];
 
   const filterNavbarLinks = (role: string) => {
     switch (role) {
-      case "user":
+      case "admin":
         return AllNavbarLinks;
-      case "writer":
+      case "user":
         return AllNavbarLinks.filter(
           (link) =>
             link.link === "/dashboard" ||
-            link.link === "/dashboard/write" ||
-            link.link === `/dashboard/user/profile`,
+            link.link === "/dashboard/profile" ||
+            link.link === `/dashboard/invitation`,
+        );
+      case "ormawa":
+        return AllNavbarLinks.filter(
+          (link) =>
+            link.link === "/dashboard" ||
+            link.link === "/dashboard/profile" ||
+            link.link === `/dashboard/event` ||
+            link.link === `/dashboard/room`,
+        );
+      case "departemen":
+        return AllNavbarLinks.filter(
+          (link) =>
+            link.link === "/dashboard" ||
+            link.link === "/dashboard/profile" ||
+            link.link === `/dashboard/event` ||
+            link.link === `/dashboard/room`,
         );
       default:
         return [];
@@ -67,10 +107,12 @@ const ChildrenLayout = ({ children }: ChildrenLayoutProps) => {
 
   return (
     <>
-      <div>
+      <main>
         <Sidebar topNav={NavbarLinks} />
-        <div className="pt-[75px] md:pt-[80px] md:pl-64">{children}</div>
-      </div>
+        <section className="pt-[75px] md:pt-[80px] md:pl-64">
+          <div className="px-8 py-4 max-lg:p-4">{children}</div>
+        </section>
+      </main>
     </>
   );
 };

@@ -1,6 +1,6 @@
 import { RowData, Table } from "@tanstack/react-table";
 import * as React from "react";
-import { HiChevronLeft, HiChevronRight } from "react-icons/hi";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 import clsxm from "@/lib/clsxm";
 import { buildPaginationControl } from "@/lib/pagination";
@@ -11,30 +11,60 @@ type PaginationState = {
   size: number;
 };
 
+type ApiIntegrationProps = {
+  enabled: boolean;
+  currentPage?: number;
+  pageSize?: number;
+  orderBy?: string;
+  isAsc?: boolean;
+  totalPages?: number; // Add this field for API total pages
+};
+
 type PaginationControlProps<T extends RowData> = {
   data: T[];
   table: Table<T>;
   setParams: React.Dispatch<React.SetStateAction<PaginationState>>;
+  apiIntegration?: ApiIntegrationProps;
+  onPageChange?: (page: number) => void;
 } & React.ComponentPropsWithoutRef<"div">;
 
-/**
- *
- * @see https://javascript.plainenglish.io/create-a-pagination-in-a-react-way-df5c6fe1e0c7
- */
 export default function PaginationControl<T extends RowData>({
   className,
   data,
   table,
   setParams,
+  apiIntegration = { enabled: false },
+  onPageChange,
   ...rest
 }: PaginationControlProps<T>) {
-  const currentPage = table.getState().pagination.pageIndex + 1;
-  const pageCount = table.getPageCount();
+  // Get current page with fallback
+  const currentPage =
+    apiIntegration.enabled && apiIntegration.currentPage
+      ? apiIntegration.currentPage
+      : (table?.getState()?.pagination?.pageIndex ?? 0) + 1;
+
+  // Get page count based on API metadata or table data
+  let pageCount = 1; // Default to 1
+
+  if (apiIntegration.enabled && apiIntegration.totalPages !== undefined) {
+    // Use API's total pages when available
+    pageCount = apiIntegration.totalPages;
+  } else {
+    // For client-side pagination, use the table's page count
+    pageCount = table?.getPageCount?.() || 1;
+  }
+
   const paginationControl = buildPaginationControl(currentPage, pageCount);
 
   const handlePageControlClick = (page: string | number) => {
     if (page !== "...") {
-      table.setPageIndex((page as number) - 1);
+      const pageNumber = page as number;
+
+      if (apiIntegration.enabled && onPageChange) {
+        onPageChange(pageNumber);
+      } else if (table?.setPageIndex) {
+        table.setPageIndex(pageNumber - 1);
+      }
     }
   };
 
@@ -49,32 +79,38 @@ export default function PaginationControl<T extends RowData>({
       <div className="flex items-center gap-1">
         <Button
           className={clsxm(
-            "flex min-w-[38px] justify-center rounded-md !border-none !p-2 !font-semibold bg-brand-400",
-            "disabled:cursor-not-allowed hover:bg-brand-500",
+            "flex min-w-[30px] justify-center rounded-md !border-none !p-2 !font-semibold bg-blue-500",
+            "disabled:cursor-not-allowed hover:bg-blue-600",
           )}
-          disabled={!table.getCanPreviousPage()}
+          disabled={currentPage <= 1}
           onClick={() => {
+            const newPage = currentPage - 1;
             setParams((params) => ({
               ...params,
-              page: Number(params.page) - 1,
+              page: newPage,
             }));
-            table.previousPage();
+
+            if (apiIntegration.enabled && onPageChange) {
+              onPageChange(newPage);
+            } else if (table?.previousPage) {
+              table.previousPage();
+            }
           }}
         >
-          <HiChevronLeft size={20} />
+          <ChevronLeft size={20} />
         </Button>
         {paginationControl.map((pageIndex, index) => (
           <Button
             key={index}
             className={clsxm(
-              "flex min-w-[38px] justify-center rounded-md border-2 border-primary-info-dark bg-white !p-2 !font-semibold text-primary-info-dark drop-shadow-sm hover:bg-brand-500",
-              currentPage === pageIndex &&
-                "bg-primary-info-hover text-typo-white",
+              "flex min-w-[38px] justify-center rounded-md border-2 border-primary-base bg-white !p-2 !font-semibold text-primary-base drop-shadow-sm hover:bg-blue-600",
+              currentPage === pageIndex && "bg-blue-500 text-white",
             )}
             onClick={() => {
+              const pageNumber = pageIndex as number;
               setParams((params) => ({
                 ...params,
-                page: pageIndex as number,
+                page: pageNumber,
               }));
               handlePageControlClick(pageIndex);
             }}
@@ -84,22 +120,25 @@ export default function PaginationControl<T extends RowData>({
         ))}
         <Button
           className={clsxm(
-            "flex min-w-[38px] justify-center rounded-md !border-none !p-2 !font-semibold text-white drop-shadow-sm ",
-            "disabled:cursor-not-allowed bg-brand-400 hover:bg-brand-500",
+            "flex min-w-[30px] justify-center rounded-md !border-none !p-2 !font-semibold text-white drop-shadow-sm ",
+            "disabled:cursor-not-allowed bg-blue-500 hover:bg-blue-600",
           )}
-          disabled={
-            !table.getCanNextPage() ||
-            data.length < table.getState().pagination.pageSize
-          }
+          disabled={currentPage >= pageCount}
           onClick={() => {
+            const newPage = currentPage + 1;
             setParams((params) => ({
               ...params,
-              page: Number(params.page) + 1,
+              page: newPage,
             }));
-            table.nextPage();
+
+            if (apiIntegration.enabled && onPageChange) {
+              onPageChange(newPage);
+            } else if (table?.nextPage) {
+              table.nextPage();
+            }
           }}
         >
-          <HiChevronRight size={20} />
+          <ChevronRight size={20} />
         </Button>
       </div>
     </div>
