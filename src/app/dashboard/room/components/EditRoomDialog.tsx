@@ -7,43 +7,45 @@ import { Edit, X } from "lucide-react";
 import Button from "@/components/buttons/Button";
 import Input from "@/components/form/Input";
 import clsxm from "@/lib/clsxm";
-import useUpdateDepartmentMutation from "@/app/hooks/department/useUpdateDepartmentMutation";
-import { Department, UpdateDepartmentRequest } from "@/types/department";
+import { Room, UpdateRoomRequest } from "@/types/room";
+import useUpdateRoomMutation from "@/app/hooks/room/useUpdateRoomMutation";
+import useAuthStore from "@/app/stores/useAuthStore";
 
-interface EditDepartmentDialogProps {
+interface EditRoomDialogProps {
   isOpen: boolean;
   setIsOpen: (open: boolean) => void;
-  department: Department | null;
+  room: Room | null;
 }
 
-export default function EditDepartmentDialog({
+export default function EditRoomDialog({
   isOpen,
   setIsOpen,
-  department,
-}: EditDepartmentDialogProps) {
-  const { mutate: updateDepartment, isPending: isUpdating } =
-    useUpdateDepartmentMutation({ id: department?.id! });
-
-  const methods = useForm<UpdateDepartmentRequest>({
+  room,
+}: EditRoomDialogProps) {
+  const methods = useForm<UpdateRoomRequest>({
     mode: "onChange",
   });
 
+  const { user } = useAuthStore();
   const { handleSubmit, reset } = methods;
+  const { mutate: updateRoom, isPending: isUpdating } = useUpdateRoomMutation({
+    roomId: room?.id!,
+    departmentId: user?.id!,
+  });
 
   React.useEffect(() => {
-    if (isOpen && department) {
+    if (isOpen && room) {
       reset({
-        name: department.name,
-        faculty: department.faculty,
-        email: department.email,
+        name: room.name,
+        capacity: room.capacity,
       });
     }
-  }, [isOpen, department, reset]);
+  }, [isOpen, room, reset]);
 
-  const onSubmit = (data: UpdateDepartmentRequest) => {
-    if (!department) return;
+  const onSubmit = (data: UpdateRoomRequest) => {
+    if (!room) return;
 
-    updateDepartment(data, {
+    updateRoom(data, {
       onSuccess: () => {
         setIsOpen(false);
         reset();
@@ -56,7 +58,7 @@ export default function EditDepartmentDialog({
     reset();
   };
 
-  if (!department) return null;
+  if (!room) return null;
 
   return (
     <Dialog open={isOpen} onClose={handleClose} className="relative z-50">
@@ -76,34 +78,26 @@ export default function EditDepartmentDialog({
           <div>
             <div className="flex items-center gap-3 mb-6">
               <Edit size={24} className="text-primary-base" />
-              <h2 className="text-xl font-semibold">Edit Departemen</h2>
+              <h2 className="text-xl font-semibold">Edit Ruangan</h2>
             </div>
 
             <FormProvider {...methods}>
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                 <Input
                   id="name"
-                  label="Nama Departemen"
-                  placeholder="Nama Departemen"
+                  label="Nama Ruangan"
+                  placeholder="Nama Ruangan"
                   validation={{
-                    required: "Nama departemen harus diisi",
+                    required: "Nama Ruangan harus diisi",
                   }}
                 />
                 <Input
-                  id="faculty"
-                  label="Nama Fakultas"
-                  placeholder="Nama Fakultas"
+                  id="capacity"
+                  label="Kapasitas Ruangan"
+                  placeholder="Kapasitas Ruangan"
                   validation={{
-                    required: "Nama fakultas harus diisi",
-                  }}
-                />
-                <Input
-                  id="email"
-                  type="email"
-                  label="Email"
-                  placeholder="Email akun departemen"
-                  validation={{
-                    required: "Email akun harus diisi",
+                    required: "Kapasitas Ruangan harus diisi",
+                    valueAsNumber: true,
                   }}
                 />
 
@@ -122,7 +116,7 @@ export default function EditDepartmentDialog({
                     disabled={isUpdating}
                     className="flex items-center gap-2"
                   >
-                    {isUpdating ? "Memproses..." : "Update Departemen"}
+                    {isUpdating ? "Memproses..." : "Update Ruangan"}
                   </Button>
                 </div>
               </form>

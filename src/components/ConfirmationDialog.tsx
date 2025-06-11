@@ -47,7 +47,7 @@ export default function ConfirmationDialog({
                   onConfirm();
                   setIsOpen(false);
                 }}
-                variant="primary"
+                variant="red"
               >
                 Ya
               </Button>
