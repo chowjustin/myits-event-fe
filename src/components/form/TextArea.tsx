@@ -58,16 +58,15 @@ export default function TextArea({
           maxLength={maxLength}
           onChange={handleChange}
           className={clsxm(
-            "h-full w-full rounded-[15px] border border-[#E2E8F0] px-[20px] py-[15px] caret-[#4FD1C5]",
-            "focus:outline-1 focus:outline-[#4FD1C5] focus:ring-inset",
-            "text-sm focus:bg-slate-50",
-            "hover:ring-1 hover:ring-inset hover:ring-[#4FD1C5]",
+            "h-full w-full rounded-md border border-gray-500 px-3 py-2.5 caret-gray-900",
+            "focus:outline-1 focus:outline-gray-900 focus:ring-inset",
+            "bg-slate-50 text-sm",
+            "hover:ring-1 hover:ring-inset hover:ring-gray-900",
             "placeholder:text-sm placeholder:text-gray-500",
             "text-gray-900",
-            readOnly &&
-              "cursor-not-allowed border-gray-300 bg-gray-100 focus:border-gray-300 focus:ring-0",
+            readOnly && "cursor-not-allowed",
             error &&
-              "border-none ring-2 ring-inset ring-red-500 placeholder:text-gray-500 focus:ring-red-500",
+              "border-none ring-2 ring-inset ring-red-500 bg-red-100 placeholder:text-gray-500 focus:ring-red-500",
             className,
           )}
           aria-describedby={id}

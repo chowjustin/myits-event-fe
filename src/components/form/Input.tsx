@@ -113,7 +113,7 @@ export default function Input({
               "text-gray-900",
               readOnly && "cursor-not-allowed",
               error &&
-                "border-none ring-2 ring-inset ring-red-500 placeholder:text-gray-500 focus:ring-red-500",
+                "border-none ring-2 ring-inset ring-red-500 bg-red-100 placeholder:text-gray-500 focus:ring-red-500",
               prefix && "rounded-l-none rounded-r-md ",
               suffix && "rounded-l-md rounded-r-none",
               prefix && suffix && "rounded-none",

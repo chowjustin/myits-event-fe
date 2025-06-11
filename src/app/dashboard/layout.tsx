@@ -87,8 +87,7 @@ const ChildrenLayout = ({ children }: ChildrenLayoutProps) => {
           (link) =>
             link.link === "/dashboard" ||
             link.link === "/dashboard/profile" ||
-            link.link === `/dashboard/event` ||
-            link.link === `/dashboard/room`,
+            link.link === `/dashboard/event`,
         );
       case "departemen":
         return AllNavbarLinks.filter(

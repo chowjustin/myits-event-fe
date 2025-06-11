@@ -9,70 +9,64 @@ import withAuth from "@/components/hoc/withAuth";
 import Button from "@/components/buttons/Button";
 import BreadCrumbs from "@/components/BreadCrumbs";
 import ConfirmationDialog from "@/components/ConfirmationDialog";
-import CreateDepartmentCard from "@/app/dashboard/department/components/CreateDepartmentCard";
-import useGetDepartments, {
-  DepartmentQueryParams,
-} from "@/app/hooks/department/useGetDepartments";
-import useDeleteDepartmentMutation from "@/app/hooks/department/useDeleteDepartmentMutation";
-import EditDepartmentDialog from "@/app/dashboard/department/components/EditDepartmentDialog";
-import { Department as DepartmentType } from "@/types/department";
+import { Event as EventType } from "@/types/event";
+import useGetEvents, { EventQueryParams } from "@/app/hooks/event/useGetEvents";
+import useDeleteEventMutation from "@/app/hooks/event/useDeleteEventMutation";
+import CreateEventCard from "./components/CreateEventCard";
+import EditEventDialog from "./components/EditEventDialog";
+import { parseToWIB } from "@/utils/parseToWib";
 
 const breadCrumbs = [
   { href: "/dashboard", Title: "Dashboard" },
-  { href: `/dashboard/department`, Title: "Departemen" },
+  { href: `/dashboard/event`, Title: "Event" },
 ];
 
-const DEFAULT_QUERY_PARAMS: DepartmentQueryParams = {
+const DEFAULT_QUERY_PARAMS: EventQueryParams = {
   page: 1,
   per_page: 10,
 };
 
-export default withAuth(Department, "departemen");
+export default withAuth(Event, "ormawa");
 
-function Department() {
-  const [departmentToDelete, setDepartmentToDelete] = React.useState<
-    string | null
-  >(null);
-  const [departmentToEdit, setDepartmentToEdit] =
-    React.useState<DepartmentType | null>(null);
+function Event() {
+  const [eventToDelete, setEventToDelete] = React.useState<string | null>(null);
+  const [eventToEdit, setEventToEdit] = React.useState<EventType | null>(null);
   const [isConfirmDeleteOpen, setIsConfirmDeleteOpen] =
     React.useState<boolean>(false);
   const [isEditDialogOpen, setIsEditDialogOpen] =
     React.useState<boolean>(false);
   const [queryParams, setQueryParams] =
-    React.useState<DepartmentQueryParams>(DEFAULT_QUERY_PARAMS);
+    React.useState<EventQueryParams>(DEFAULT_QUERY_PARAMS);
 
   const {
-    data: departments,
-    isLoading: getDepartmentsLoading,
+    data: events,
+    isLoading: getEventsLoading,
     error,
-  } = useGetDepartments({ ...queryParams });
+  } = useGetEvents({ ...queryParams });
 
-  const {
-    mutate: deleteDepartmentMutation,
-    isPending: isDeleteDepartmentLoading,
-  } = useDeleteDepartmentMutation();
+  const { mutate: deleteEventMutation, isPending: isDeleteEventLoading } =
+    useDeleteEventMutation();
 
   const tableData = React.useMemo(
-    () => (getDepartmentsLoading ? [] : departments?.data || []),
-    [getDepartmentsLoading, departments?.data],
+    () => (getEventsLoading ? [] : events?.data?.data || []),
+    [getEventsLoading, events?.data?.data],
   );
 
-  const totalPages = departments?.meta?.max_page || 1;
+  const totalPages = events?.max_page || 1;
 
-  const handleDeleteDepartment = (departmentId: string) => {
-    setDepartmentToDelete(departmentId);
+  const handleDeleteEvent = (eventId: string) => {
+    setEventToDelete(eventId);
     setIsConfirmDeleteOpen(true);
   };
 
-  const handleEditDepartment = (department: DepartmentType) => {
-    setDepartmentToEdit(department);
+  const handleEditEvent = (event: EventType) => {
+    setEventToEdit(event);
     setIsEditDialogOpen(true);
   };
 
   const confirmDelete = () => {
-    if (departmentToDelete) {
-      deleteDepartmentMutation(departmentToDelete);
+    if (eventToDelete) {
+      deleteEventMutation(eventToDelete);
     }
   };
 
@@ -92,15 +86,15 @@ function Department() {
   };
 
   const columns = useTableColumns(
-    handleDeleteDepartment,
-    handleEditDepartment,
-    isDeleteDepartmentLoading,
+    handleDeleteEvent,
+    handleEditEvent,
+    isDeleteEventLoading,
   );
 
   if (error) {
     return (
       <div className="text-center py-8 text-red-600">
-        Error loading departments. Please try again later.
+        Error loading events. Please try again later.
       </div>
     );
   }
@@ -112,18 +106,16 @@ function Department() {
           <BreadCrumbs breadcrumbs={breadCrumbs} />
         </div>
         <h1 className="text-2xl max-lg:text-xl font-semibold">
-          Manajemen Departemen
+          Manajemen Event
         </h1>
       </div>
 
-      <CreateDepartmentCard />
+      <CreateEventCard />
 
       <div className="bg-white rounded-lg shadow p-6 border border-gray-200">
         <h2 className="text-2xl font-semibold mb-4 flex items-center gap-3">
           <Users size={24} className="text-primary-base max-lg:max-w-[20px]" />
-          <h2 className="text-2xl max-lg:text-lg font-semibold">
-            Daftar Departemen
-          </h2>
+          <h2 className="text-2xl max-lg:text-lg font-semibold">Event Kamu</h2>
         </h2>
         <Table
           className="text-black"
@@ -132,8 +124,8 @@ function Department() {
           withFilter
           withEntries
           withPaginationControl
+          isLoading={getEventsLoading}
           tableClassName="max-h-[32.5vh] overflow-y-auto"
-          isLoading={getDepartmentsLoading}
           onTableParamsChange={handleTableParamsChange}
           apiIntegration={{
             enabled: true,
@@ -147,23 +139,23 @@ function Department() {
       <ConfirmationDialog
         isOpen={isConfirmDeleteOpen}
         setIsOpen={setIsConfirmDeleteOpen}
-        message={`Apakah anda yakin ingin menghapus departemen ini?`}
+        message={`Apakah anda yakin ingin menghapus event ini?`}
         onConfirm={confirmDelete}
       />
 
-      <EditDepartmentDialog
+      <EditEventDialog
         isOpen={isEditDialogOpen}
         setIsOpen={setIsEditDialogOpen}
-        department={departmentToEdit}
+        event={eventToEdit}
       />
     </section>
   );
 }
 
 const useTableColumns = (
-  onDelete: (departmentId: string) => void,
-  onEdit: (department: DepartmentType) => void,
-  isDeleteDepartmentLoading: boolean,
+  onDelete: (eventId: string) => void,
+  onEdit: (event: EventType) => void,
+  isDeleteEventLoading: boolean,
 ) => {
   return React.useMemo<ColumnDef<any>[]>(
     () => [
@@ -173,14 +165,31 @@ const useTableColumns = (
         cell: ({ row }) => <p>{row.original?.name}</p>,
       },
       {
-        accessorKey: "faculty",
-        header: "Fakultas",
-        cell: ({ row }) => <p>{row.original?.faculty}</p>,
+        accessorKey: "description",
+        header: "Deskripsi",
+        cell: ({ row }) => (
+          <p className="line-clamp-2">{row.original?.description}</p>
+        ),
       },
       {
-        accessorKey: "email",
-        header: "Akun Departemen",
-        cell: ({ row }) => <p>{row.original?.email}</p>,
+        accessorKey: "start_time",
+        header: "Tanggal Mulai",
+        cell: ({ row }) => <p>{parseToWIB(row.original?.start_time)}</p>,
+      },
+      {
+        accessorKey: "end_time",
+        header: "Tanggal Selesai",
+        cell: ({ row }) => <p>{parseToWIB(row.original?.end_time)}</p>,
+      },
+      {
+        accessorKey: "event_type",
+        header: "Tipe Event",
+        cell: ({ row }) => <p>{row.original?.event_type}</p>,
+      },
+      {
+        accessorKey: "created_by",
+        header: "Dibuat oleh",
+        cell: ({ row }) => <p>{row.original?.created_by}</p>,
       },
       {
         id: "actions",
@@ -203,7 +212,7 @@ const useTableColumns = (
               </Button>
               <Button
                 variant={"red"}
-                isLoading={isDeleteDepartmentLoading}
+                isLoading={isDeleteEventLoading}
                 onClick={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
@@ -218,6 +227,6 @@ const useTableColumns = (
         },
       },
     ],
-    [onDelete, onEdit, isDeleteDepartmentLoading],
+    [onDelete, onEdit, isDeleteEventLoading],
   );
 };

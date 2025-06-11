@@ -101,6 +101,7 @@ function RoomPage() {
           withEntries
           withPaginationControl
           isLoading={getRoomsLoading}
+          tableClassName="max-h-[32.5vh] overflow-y-auto"
         />
       </div>
 

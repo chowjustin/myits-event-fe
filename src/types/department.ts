@@ -19,7 +19,3 @@ export type UpdateDepartmentRequest = {
   password?: string;
   faculty?: string;
 };
-
-export type WithToken = {
-  token: string;
-};

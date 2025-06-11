@@ -43,28 +43,35 @@ api.interceptors.request.use(function (config) {
   return config;
 });
 
-api.interceptors.response.use(
-  (config) => {
-    return config;
-  },
-  (error: AxiosError<UninterceptedApiError>) => {
-    // parse error
-    if (error.response?.data.message) {
-      return Promise.reject({
-        ...error,
-        response: {
-          ...error.response,
-          data: {
-            ...error.response.data,
-            message:
-              typeof error.response.data.message === "string"
-                ? error.response.data.message
-                : Object.values(error.response.data.message)[0][0],
+if (typeof window !== "undefined") {
+  const router = require("next/router").default;
+
+  api.interceptors.response.use(
+    (response) => response,
+    async (error: AxiosError<UninterceptedApiError>) => {
+      if (error.response?.status === 401) {
+        router.push("/login"); // 👈 redirect on 401
+        return Promise.reject(error);
+      }
+
+      if (error.response?.data?.message) {
+        return Promise.reject({
+          ...error,
+          response: {
+            ...error.response,
+            data: {
+              ...error.response.data,
+              message:
+                typeof error.response.data.message === "string"
+                  ? error.response.data.message
+                  : Object.values(error.response.data.message)[0][0],
+            },
           },
-        },
-      });
-    }
-    return Promise.reject(error);
-  },
-);
+        });
+      }
+
+      return Promise.reject(error);
+    },
+  );
+}
 export default api;
