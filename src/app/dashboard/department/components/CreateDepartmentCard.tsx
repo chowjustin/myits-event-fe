@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import { Disclosure } from "@headlessui/react";
 import { ChevronDown, ChevronUp, Plus } from "lucide-react";
 import { FormProvider, useForm } from "react-hook-form";
