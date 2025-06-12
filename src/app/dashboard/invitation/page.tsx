@@ -1,7 +1,6 @@
 "use client";
 
 import { useForm, FormProvider } from "react-hook-form";
-import { useState } from "react";
 import BreadCrumbs from "@/components/BreadCrumbs";
 import SelectInput from "@/components/form/SelectInput";
 import Button from "@/components/buttons/Button";
@@ -20,8 +19,6 @@ const breadCrumbs = [
 
 export default withAuth(Invitation, "ormawa");
 function Invitation() {
-  const [isSubmitted, setIsSubmitted] = useState(false);
-
   const methods = useForm<CreateInvitationRequest>({
     defaultValues: {
       event_id: "",
@@ -54,7 +51,6 @@ function Invitation() {
   const onSubmit = (data: CreateInvitationRequest) => {
     createInvitation(data, {
       onSuccess: () => {
-        setIsSubmitted(true);
         reset();
         toast.success("Undangan berhasil dikirim!");
       },
@@ -84,12 +80,6 @@ function Invitation() {
             Pilih event dan pengguna yang akan diundang
           </p>
         </div>
-
-        {isSubmitted && (
-          <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-md">
-            <div className="text-green-800">Undangan berhasil dikirim!</div>
-          </div>
-        )}
 
         <FormProvider {...methods}>
           <form onSubmit={handleSubmit(onSubmit)}>

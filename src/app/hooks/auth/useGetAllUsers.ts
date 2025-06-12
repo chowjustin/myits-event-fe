@@ -17,5 +17,6 @@ export function useGetAllUsers({ role }: GetAllUsersQueryParams = {}) {
       const response = await api.get(query);
       return response.data;
     },
+    refetchOnWindowFocus: false,
   });
 }
