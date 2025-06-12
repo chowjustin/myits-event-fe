@@ -1,14 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
-<url><loc>&apos;https://event.chow.my.id/&apos; # Site URL/login</loc><lastmod>2025-06-08T11:03:07.070Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>&apos;https://event.chow.my.id/&apos; # Site URL/dashboard</loc><lastmod>2025-06-08T11:03:07.071Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>&apos;https://event.chow.my.id/&apos; # Site URL/dashboard/department</loc><lastmod>2025-06-08T11:03:07.071Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>&apos;https://event.chow.my.id/&apos; # Site URL/sandbox/table</loc><lastmod>2025-06-08T11:03:07.071Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>&apos;https://event.chow.my.id/&apos; # Site URL/opengraph-image.png</loc><lastmod>2025-06-08T11:03:07.071Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>&apos;https://event.chow.my.id/&apos; # Site URL/sandbox/form</loc><lastmod>2025-06-08T11:03:07.071Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>'https://event.chow.my.id/' # Site URL</loc><lastmod>2025-06-08T11:03:07.071Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>&apos;https://event.chow.my.id/&apos; # Site URL/register</loc><lastmod>2025-06-08T11:03:07.071Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>&apos;https://event.chow.my.id/&apos; # Site URL/sandbox/button</loc><lastmod>2025-06-08T11:03:07.071Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>&apos;https://event.chow.my.id/&apos; # Site URL/test-booking</loc><lastmod>2025-06-08T11:03:07.071Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>&apos;https://event.chow.my.id/&apos; # Site URL/dashboard/profile</loc><lastmod>2025-06-08T11:03:07.071Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>&apos;https://event.chow.my.id/&apos; # Site URL/login</loc><lastmod>2025-06-12T18:58:25.334Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>&apos;https://event.chow.my.id/&apos; # Site URL/opengraph-image.png</loc><lastmod>2025-06-12T18:58:25.335Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>&apos;https://event.chow.my.id/&apos; # Site URL/dashboard/organization</loc><lastmod>2025-06-12T18:58:25.335Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>'https://event.chow.my.id/' # Site URL</loc><lastmod>2025-06-12T18:58:25.335Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>&apos;https://event.chow.my.id/&apos; # Site URL/sandbox/button</loc><lastmod>2025-06-12T18:58:25.335Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>&apos;https://event.chow.my.id/&apos; # Site URL/register</loc><lastmod>2025-06-12T18:58:25.335Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>&apos;https://event.chow.my.id/&apos; # Site URL/sandbox/presensi</loc><lastmod>2025-06-12T18:58:25.335Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>&apos;https://event.chow.my.id/&apos; # Site URL/sandbox/datepicker</loc><lastmod>2025-06-12T18:58:25.335Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>&apos;https://event.chow.my.id/&apos; # Site URL/dashboard/profile</loc><lastmod>2025-06-12T18:58:25.335Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>&apos;https://event.chow.my.id/&apos; # Site URL/dashboard/event</loc><lastmod>2025-06-12T18:58:25.335Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>&apos;https://event.chow.my.id/&apos; # Site URL/sandbox/form</loc><lastmod>2025-06-12T18:58:25.335Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>&apos;https://event.chow.my.id/&apos; # Site URL/dashboard</loc><lastmod>2025-06-12T18:58:25.335Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>&apos;https://event.chow.my.id/&apos; # Site URL/dashboard/room</loc><lastmod>2025-06-12T18:58:25.335Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>&apos;https://event.chow.my.id/&apos; # Site URL/dashboard/booking-request</loc><lastmod>2025-06-12T18:58:25.335Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>&apos;https://event.chow.my.id/&apos; # Site URL/dashboard/my-invitation</loc><lastmod>2025-06-12T18:58:25.335Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>&apos;https://event.chow.my.id/&apos; # Site URL/test-booking</loc><lastmod>2025-06-12T18:58:25.335Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>&apos;https://event.chow.my.id/&apos; # Site URL/dashboard/department</loc><lastmod>2025-06-12T18:58:25.335Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>&apos;https://event.chow.my.id/&apos; # Site URL/dashboard/invitation</loc><lastmod>2025-06-12T18:58:25.335Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>&apos;https://event.chow.my.id/&apos; # Site URL/sandbox/table</loc><lastmod>2025-06-12T18:58:25.335Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
 </urlset>

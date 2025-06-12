@@ -4,6 +4,7 @@ import Sidebar from "@/app/layouts/Sidebar";
 import { ReactNode } from "react";
 import {
   Calendar,
+  CircleFadingPlus,
   CircleUserRound,
   DoorOpen,
   House,
@@ -68,6 +69,11 @@ const ChildrenLayout = ({ children }: ChildrenLayoutProps) => {
       icon: Calendar,
       link: "/dashboard/my-invitation",
     },
+    {
+      title: "Permintaan Booking",
+      icon: CircleFadingPlus,
+      link: "/dashboard/booking-request",
+    },
   ];
 
   const filterNavbarLinks = (role: string) => {
@@ -87,14 +93,16 @@ const ChildrenLayout = ({ children }: ChildrenLayoutProps) => {
             link.link === "/dashboard" ||
             link.link === "/dashboard/profile" ||
             link.link === `/dashboard/event` ||
-            link.link === `/dashboard/invitation`,
+            link.link === `/dashboard/invitation` ||
+            link.link === `/dashboard/booking-request`,
         );
       case "departemen":
         return AllNavbarLinks.filter(
           (link) =>
             link.link === "/dashboard" ||
             link.link === "/dashboard/profile" ||
-            link.link === `/dashboard/room`,
+            link.link === `/dashboard/room` ||
+            link.link === `/dashboard/booking-request`,
         );
       default:
         return [];
