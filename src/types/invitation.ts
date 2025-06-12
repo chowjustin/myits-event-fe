@@ -9,4 +9,5 @@ export interface Invitation {
   invited_at: string;
   rsvp_status: "pending" | "accepted" | "declined";
   rsvp_at?: string;
+  qr_code: string;
 }

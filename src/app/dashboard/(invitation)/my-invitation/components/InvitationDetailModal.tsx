@@ -8,6 +8,7 @@ import { Invitation } from "@/types/invitation";
 import { useAcceptInvitation } from "@/app/hooks/invitation/useAcceptRSVPMutation";
 import { useDeclineInvitation } from "@/app/hooks/invitation/useDeclineRSVPMutation";
 import { parseToWIB } from "@/utils/parseToWib";
+import toast from "react-hot-toast";
 
 interface InvitationDetailModalProps {
   isOpen: boolean;
@@ -30,9 +31,10 @@ export default function InvitationDetailModal({
   const handleAccept = () => {
     if (!invitation) return;
 
-    acceptInvitation(invitation.id, {
+    acceptInvitation(invitation.qr_code, {
       onSuccess: () => {
         setIsOpen(false);
+        toast.success("Undangan berhasil diterima");
       },
     });
   };
@@ -40,9 +42,10 @@ export default function InvitationDetailModal({
   const handleDecline = () => {
     if (!invitation) return;
 
-    declineInvitation(invitation.id, {
+    declineInvitation(invitation.qr_code, {
       onSuccess: () => {
         setIsOpen(false);
+        toast.success("Undangan berhasil ditolak");
       },
     });
   };
