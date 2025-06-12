@@ -33,7 +33,9 @@ function Invitation() {
 
   const { data: eventsData, isLoading: eventsLoading } = useGetEvents();
 
-  const { data: usersData, isLoading: usersLoading } = useGetAllUsers();
+  const { data: usersData, isLoading: usersLoading } = useGetAllUsers({
+    role: "user",
+  });
 
   const { mutate: createInvitation, isPending } = useCreateInvitationMutation();
 
