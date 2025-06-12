@@ -63,6 +63,11 @@ const ChildrenLayout = ({ children }: ChildrenLayoutProps) => {
       icon: Calendar,
       link: "/dashboard/invitation",
     },
+    {
+      title: "Undangan",
+      icon: Calendar,
+      link: "/dashboard/my-invitation",
+    },
   ];
 
   const filterNavbarLinks = (role: string) => {
@@ -72,7 +77,9 @@ const ChildrenLayout = ({ children }: ChildrenLayoutProps) => {
       case "user":
         return AllNavbarLinks.filter(
           (link) =>
-            link.link === "/dashboard" || link.link === "/dashboard/profile",
+            link.link === "/dashboard" ||
+            link.link === "/dashboard/profile" ||
+            link.link === "/dashboard/my-invitation",
         );
       case "ormawa":
         return AllNavbarLinks.filter(
@@ -87,7 +94,6 @@ const ChildrenLayout = ({ children }: ChildrenLayoutProps) => {
           (link) =>
             link.link === "/dashboard" ||
             link.link === "/dashboard/profile" ||
-            link.link === `/dashboard/event` ||
             link.link === `/dashboard/room`,
         );
       default:
