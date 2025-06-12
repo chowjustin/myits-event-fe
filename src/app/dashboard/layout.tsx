@@ -64,11 +64,6 @@ const ChildrenLayout = ({ children }: ChildrenLayoutProps) => {
       icon: Calendar,
       link: "/dashboard/invitation",
     },
-    {
-      title: "Akun",
-      icon: Users,
-      link: "/dashboard/account",
-    },
   ];
 
   const filterNavbarLinks = (role: string) => {
