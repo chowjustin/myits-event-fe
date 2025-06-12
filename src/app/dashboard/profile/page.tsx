@@ -10,8 +10,8 @@ import useAuthStore from "@/app/stores/useAuthStore";
 import ProfileSkeleton from "./components/ProfileSkeleton";
 import ProfileField from "./components/ProfileFields";
 import EditPasswordModal from "./modal/EditPasswordModal";
-import useEditUserMutation from "@/app/hooks/user/useEditUserMutation";
-import { useGetMe } from "@/app/hooks/user/useGetMe";
+import useEditUserMutation from "@/app/hooks/auth/useEditUserMutation";
+import { useGetMe } from "@/app/hooks/auth/useGetMe";
 import parseRole from "@/utils/parseRole";
 
 interface ModalState {

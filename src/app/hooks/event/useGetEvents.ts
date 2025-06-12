@@ -1,18 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import api from "@/lib/api";
+import { Event } from "@/types/event";
 
 export type EventQueryParams = {
   page: number;
   per_page: number;
 };
-
-interface Event {
-  id: string;
-  name: string;
-  description: string;
-  created_at: string;
-  updated_at: string;
-}
 
 type ApiResponse = {
   data: { data: Event[] };
@@ -22,7 +15,7 @@ type ApiResponse = {
   count: number;
 };
 
-export default function useGetEvents(queryParams: EventQueryParams) {
+export default function useGetEvents(queryParams?: EventQueryParams) {
   return useQuery<ApiResponse>({
     queryKey: ["events", queryParams],
     queryFn: async () => {

@@ -7,7 +7,7 @@ import Link from "next/link";
 import { FormProvider, useForm } from "react-hook-form";
 import withAuth from "@/components/hoc/withAuth";
 import { CreateUserRequest } from "@/types/user";
-import useCreateUserMutation from "@/app/hooks/user/useCreateUserMutation";
+import useCreateUserMutation from "@/app/hooks/auth/useCreateUserMutation";
 
 export default withAuth(RegisterPage, "public");
 

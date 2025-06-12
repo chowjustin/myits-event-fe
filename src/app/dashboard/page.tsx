@@ -9,11 +9,7 @@ function Dashboard() {
     <main>
       <div className="text-justify h-screen">
         <h1 className="text-2xl font-bold mb-4 ">Dashboard</h1>
-        <p>
-          Welcome to the dashboard! Here you can manage your posts, view
-          statistics, and more.
-        </p>
-        {/* Add more dashboard components here */}
+        <p>Selamat datang di myITS Event!</p>
       </div>
     </main>
   );

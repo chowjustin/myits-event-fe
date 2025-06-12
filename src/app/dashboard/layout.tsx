@@ -78,16 +78,15 @@ const ChildrenLayout = ({ children }: ChildrenLayoutProps) => {
       case "user":
         return AllNavbarLinks.filter(
           (link) =>
-            link.link === "/dashboard" ||
-            link.link === "/dashboard/profile" ||
-            link.link === `/dashboard/invitation`,
+            link.link === "/dashboard" || link.link === "/dashboard/profile",
         );
       case "ormawa":
         return AllNavbarLinks.filter(
           (link) =>
             link.link === "/dashboard" ||
             link.link === "/dashboard/profile" ||
-            link.link === `/dashboard/event`,
+            link.link === `/dashboard/event` ||
+            link.link === `/dashboard/invitation`,
         );
       case "departemen":
         return AllNavbarLinks.filter(

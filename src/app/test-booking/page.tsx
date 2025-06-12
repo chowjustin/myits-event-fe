@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   AlertCircle,
   Calendar,
@@ -91,8 +91,8 @@ const apiService = {
             id: "req123",
             event_id: "evt1",
             event_title: "Programming Workshop",
-            organization_id: "org1",
-            organization_name: "CS Association",
+            ormawa_id: "org1",
+            ormawa_name: "CS Association",
             room_id: "room1",
             date: "2024-03-15",
             time_slots: [16, 17, 18],
@@ -103,8 +103,8 @@ const apiService = {
             id: "req124",
             event_id: "evt2",
             event_title: "Tech Seminar",
-            organization_id: "org2",
-            organization_name: "Engineering Club",
+            ormawa_id: "org2",
+            ormawa_name: "Engineering Club",
             room_id: "room2",
             date: "2024-03-16",
             time_slots: [14, 15],
@@ -236,7 +236,7 @@ interface BookingRequest {
   id: string;
   eventId: string;
   eventTitle: string;
-  organizationName: string;
+  ormawaName: string;
   roomId: string;
   date: string;
   timeSlots: number[];
@@ -248,16 +248,16 @@ interface BookingRequest {
 interface User {
   id: string;
   name: string;
-  role: "student" | "organization" | "department";
-  organizationName?: string;
+  role: "student" | "ormawa" | "department";
+  ormawaName?: string;
 }
 
 const RoomBookingSystem = () => {
   const [currentUser] = useState<User>({
     id: "1",
     name: "John Doe",
-    role: "department",
-    organizationName: "Computer Science Student Association",
+    role: "ormawa",
+    ormawaName: "Computer Science Student Association",
   });
 
   const [selectedDate, setSelectedDate] = useState(
@@ -276,7 +276,7 @@ const RoomBookingSystem = () => {
   // Load initial data
   useEffect(() => {
     loadRooms();
-    if (currentUser.role === "organization") {
+    if (currentUser.role === "ormawa") {
       loadUserEvents();
     }
     if (currentUser.role === "department") {
@@ -379,7 +379,7 @@ const RoomBookingSystem = () => {
   };
 
   const handleTimeSlotClick = (hour: number, status: string) => {
-    if (currentUser.role === "organization" && status === "available") {
+    if (currentUser.role === "ormawa" && status === "available") {
       setSelectedTimeSlots((prev) =>
         prev.includes(hour) ? prev.filter((h) => h !== hour) : [...prev, hour],
       );
@@ -467,7 +467,11 @@ const RoomBookingSystem = () => {
             <div className="flex space-x-4">
               <button
                 onClick={() => setView("booking")}
-                className={`px-4 py-2 rounded-lg ${view === "booking" ? "bg-blue-600 text-white" : "bg-gray-200 text-gray-700"}`}
+                className={`px-4 py-2 rounded-lg ${
+                  view === "booking"
+                    ? "bg-blue-600 text-white"
+                    : "bg-gray-200 text-gray-700"
+                }`}
               >
                 <Calendar className="w-4 h-4 inline mr-2" />
                 Room Booking
@@ -475,7 +479,11 @@ const RoomBookingSystem = () => {
               {currentUser.role === "department" && (
                 <button
                   onClick={() => setView("management")}
-                  className={`px-4 py-2 rounded-lg ${view === "management" ? "bg-blue-600 text-white" : "bg-gray-200 text-gray-700"}`}
+                  className={`px-4 py-2 rounded-lg ${
+                    view === "management"
+                      ? "bg-blue-600 text-white"
+                      : "bg-gray-200 text-gray-700"
+                  }`}
                 >
                   <Users className="w-4 h-4 inline mr-2" />
                   Manage Requests
@@ -521,7 +529,7 @@ const RoomBookingSystem = () => {
                   </select>
                 </div>
 
-                {currentUser.role === "organization" && (
+                {currentUser.role === "ormawa" && (
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
                       Event
@@ -541,7 +549,7 @@ const RoomBookingSystem = () => {
                   </div>
                 )}
 
-                {currentUser.role === "organization" &&
+                {currentUser.role === "ormawa" &&
                   selectedTimeSlots.length > 0 && (
                     <button
                       onClick={handleBookingSubmit}
@@ -598,8 +606,17 @@ const RoomBookingSystem = () => {
                     className={`
                       p-3 rounded-lg border-2 cursor-pointer transition-all duration-200
                       ${getSlotColor(slot.status)}
-                      ${selectedTimeSlots.includes(slot.hour) ? "ring-2 ring-blue-500" : ""}
-                      ${currentUser.role === "organization" && slot.status !== "available" ? "cursor-not-allowed" : ""}
+                      ${
+                        selectedTimeSlots.includes(slot.hour)
+                          ? "ring-2 ring-blue-500"
+                          : ""
+                      }
+                      ${
+                        currentUser.role === "ormawa" &&
+                        slot.status !== "available"
+                          ? "cursor-not-allowed"
+                          : ""
+                      }
                     `}
                   >
                     <div className="flex items-center justify-between mb-1">
@@ -624,7 +641,7 @@ const RoomBookingSystem = () => {
                 ))}
               </div>
 
-              {currentUser.role === "organization" &&
+              {currentUser.role === "ormawa" &&
                 selectedTimeSlots.length > 0 && (
                   <div className="mt-4 p-3 bg-blue-50 rounded-lg">
                     <p className="text-sm text-blue-700">
@@ -665,8 +682,7 @@ const RoomBookingSystem = () => {
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-gray-600">
                           <div>
                             <p>
-                              <strong>Organization:</strong>{" "}
-                              {request.organizationName}
+                              <strong>ormawa:</strong> {request.ormawaName}
                             </p>
                             <p>
                               <strong>Room:</strong>{" "}
@@ -740,7 +756,7 @@ const RoomBookingSystem = () => {
                         <span className="font-medium">
                           {request.eventTitle}
                         </span>{" "}
-                        by {request.organizationName}
+                        by {request.ormawaName}
                       </div>
                       <div className="flex items-center space-x-2">
                         <span
