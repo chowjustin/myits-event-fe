@@ -10,6 +10,7 @@ import {
   House,
   LucideIcon,
   PencilLine,
+  ScanLine,
   School,
   University,
 } from "lucide-react";
@@ -74,6 +75,11 @@ const ChildrenLayout = ({ children }: ChildrenLayoutProps) => {
       icon: CircleFadingPlus,
       link: "/dashboard/booking-request",
     },
+    {
+      title: "Presensi Event",
+      icon: ScanLine,
+      link: "/dashboard/presensi",
+    },
   ];
 
   const filterNavbarLinks = (role: string) => {
@@ -94,7 +100,8 @@ const ChildrenLayout = ({ children }: ChildrenLayoutProps) => {
             link.link === "/dashboard/profile" ||
             link.link === `/dashboard/event` ||
             link.link === `/dashboard/invitation` ||
-            link.link === `/dashboard/booking-request`,
+            link.link === `/dashboard/booking-request` ||
+            link.link === `/dashboard/presensi`,
         );
       case "departemen":
         return AllNavbarLinks.filter(
