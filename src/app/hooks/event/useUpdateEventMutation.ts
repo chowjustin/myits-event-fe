@@ -21,8 +21,8 @@ export default function useUpdateDepartmentMutation({
         toast.success("Event berhasil diupdate!");
         queryClient.invalidateQueries({ queryKey: ["events", id] });
       },
-      onError: (err) => {
-        toast.error(err?.message || "Gagal menyimpan event!");
+      onError: () => {
+        toast.error("end time harus lebih besar dari start time");
       },
     });
 

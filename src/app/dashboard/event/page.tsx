@@ -113,9 +113,19 @@ function Event() {
       <CreateEventCard />
 
       <div className="bg-white rounded-lg shadow p-6 border border-gray-200">
-        <h2 className="text-2xl font-semibold mb-4 flex items-center gap-3">
-          <Users size={24} className="text-primary-base max-lg:max-w-[20px]" />
-          <h2 className="text-2xl max-lg:text-lg font-semibold">Event Kamu</h2>
+        <h2 className="text-2xl font-semibold mb-4 flex justify-between items-center gap-3">
+          <div className="flex gap-2 items-center">
+            <Users
+              size={24}
+              className="text-primary-base max-lg:max-w-[20px]"
+            />
+            <h2 className="text-2xl max-lg:text-lg font-semibold">
+              Event Kamu
+            </h2>
+          </div>
+          <span className="text-base font-medium">
+            Event yang kamu buat: {tableData.length}
+          </span>
         </h2>
         <Table
           className="text-black"

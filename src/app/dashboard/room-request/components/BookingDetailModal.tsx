@@ -7,7 +7,6 @@ import clsxm from "@/lib/clsxm";
 import useUpdateBookingRequest from "@/app/hooks/booking-request/useUpdateBookingReq";
 import toast from "react-hot-toast";
 
-// Types
 interface Room {
   room_id: string;
   room_name: string;
