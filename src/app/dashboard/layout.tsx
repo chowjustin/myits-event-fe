@@ -65,7 +65,7 @@ const ChildrenLayout = ({ children }: ChildrenLayoutProps) => {
       link: "/dashboard/invitation",
     },
     {
-      title: "Undangan",
+      title: "Undangan Saya",
       icon: Calendar,
       link: "/dashboard/my-invitation",
     },
