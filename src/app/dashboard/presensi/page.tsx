@@ -5,16 +5,14 @@ import * as React from "react";
 
 import Button from "@/components/buttons/Button";
 import toast from "react-hot-toast";
-import { useAcceptInvitation } from "@/app/hooks/invitation/useAcceptRSVPMutation";
 import withAuth from "@/components/hoc/withAuth";
+import { usePresensiMutation } from "@/app/hooks/invitation/usePresensiMutation";
 
 export default withAuth(Presensi, "ormawa");
 function Presensi() {
   const [qrId, setQrId] = React.useState<string | null>(null);
 
-  const { mutateAsync } = useAcceptInvitation({
-    userId: qrId!,
-  });
+  const { mutateAsync } = usePresensiMutation();
 
   const onScan = (id: string) => {
     setQrId(id);

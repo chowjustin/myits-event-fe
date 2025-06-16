@@ -18,10 +18,10 @@ export interface WithAuthProps {
   user: User;
 }
 
-const DEPARTEMEN_ROUTE = "/dashboard";
-const ORMAWA_ROUTE = "/dashboard";
-const ADMIN_ROUTE = "/admin";
-const USER_ROUTE = "/";
+const DEPARTEMEN_ROUTE = "/dashboard/room";
+const ORMAWA_ROUTE = "/dashboard/event";
+const ADMIN_ROUTE = "/dashboard/department";
+const USER_ROUTE = "/dashboard/my-invitation";
 
 const LOGIN_ROUTE = "/login";
 

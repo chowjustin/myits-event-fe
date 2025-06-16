@@ -1,7 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { AxiosError, AxiosResponse } from "axios";
 import toast from "react-hot-toast";
-import { useRouter } from "next/navigation";
 import api from "@/lib/api";
 import { setToken } from "@/lib/cookies";
 import { LoginError, LoginRequest, LoginResponse } from "@/types/auth/login";
@@ -11,8 +10,6 @@ import { ApiResponse } from "@/types/api";
 
 export default function useLoginMutation() {
   const { login } = useAuthStore();
-
-  const router = useRouter();
 
   const { mutate, isPending } = useMutation<
     AxiosResponse,
@@ -36,7 +33,6 @@ export default function useLoginMutation() {
     },
     onSuccess: () => {
       toast.success("Anda berhasil login");
-      router.push("/dashboard");
     },
     onError: (error) => {
       toast.error(error?.response?.data.error || error.message);

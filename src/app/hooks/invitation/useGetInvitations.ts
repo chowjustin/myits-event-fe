@@ -1,4 +1,3 @@
-// hooks/invitation/useGetInvitations.ts
 import { useQuery } from "@tanstack/react-query";
 import api from "@/lib/api";
 import { Invitation } from "@/types/invitation";

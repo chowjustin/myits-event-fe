@@ -6,6 +6,7 @@ import {
   Calendar,
   CircleFadingPlus,
   CircleUserRound,
+  DoorClosedLocked,
   DoorOpen,
   House,
   LucideIcon,
@@ -61,6 +62,11 @@ const ChildrenLayout = ({ children }: ChildrenLayoutProps) => {
       link: "/dashboard/event",
     },
     {
+      title: "Ajuan Ruangan",
+      icon: DoorClosedLocked,
+      link: "/dashboard/room-request",
+    },
+    {
       title: "Undangan",
       icon: Calendar,
       link: "/dashboard/invitation",
@@ -109,7 +115,7 @@ const ChildrenLayout = ({ children }: ChildrenLayoutProps) => {
             link.link === "/dashboard" ||
             link.link === "/dashboard/profile" ||
             link.link === `/dashboard/room` ||
-            link.link === `/dashboard/booking-request`,
+            link.link === `/dashboard/room-request`,
         );
       default:
         return [];
