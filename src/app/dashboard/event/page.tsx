@@ -15,6 +15,8 @@ import useDeleteEventMutation from "@/app/hooks/event/useDeleteEventMutation";
 import CreateEventCard from "./components/CreateEventCard";
 import EditEventDialog from "./components/EditEventDialog";
 import { parseToWIB } from "@/utils/parseToWib";
+import AttendeesModal from "./components/AttendeesModal";
+import { Users as AttendeesIcon } from "lucide-react";
 
 const breadCrumbs = [
   { href: "/dashboard", Title: "Dashboard" },
@@ -34,6 +36,11 @@ function Event() {
   const [isConfirmDeleteOpen, setIsConfirmDeleteOpen] =
     React.useState<boolean>(false);
   const [isEditDialogOpen, setIsEditDialogOpen] =
+    React.useState<boolean>(false);
+  const [eventToViewAttendees, setEventToViewAttendees] = React.useState<
+    string | null
+  >(null);
+  const [isAttendeesModalOpen, setIsAttendeesModalOpen] =
     React.useState<boolean>(false);
   const [queryParams, setQueryParams] =
     React.useState<EventQueryParams>(DEFAULT_QUERY_PARAMS);
@@ -70,6 +77,11 @@ function Event() {
     }
   };
 
+  const handleViewAttendees = (eventId: string) => {
+    setEventToViewAttendees(eventId);
+    setIsAttendeesModalOpen(true);
+  };
+
   const handleTableParamsChange = (
     page: number,
     pageSize: number,
@@ -89,6 +101,7 @@ function Event() {
     handleDeleteEvent,
     handleEditEvent,
     isDeleteEventLoading,
+    handleViewAttendees,
   );
 
   if (error) {
@@ -158,6 +171,12 @@ function Event() {
         setIsOpen={setIsEditDialogOpen}
         event={eventToEdit}
       />
+
+      <AttendeesModal
+        isOpen={isAttendeesModalOpen}
+        setIsOpen={setIsAttendeesModalOpen}
+        eventId={eventToViewAttendees}
+      />
     </section>
   );
 }
@@ -166,6 +185,7 @@ const useTableColumns = (
   onDelete: (eventId: string) => void,
   onEdit: (event: EventType) => void,
   isDeleteEventLoading: boolean,
+  onViewAttendees: (eventId: string) => void,
 ) => {
   return React.useMemo<ColumnDef<any>[]>(
     () => [
@@ -210,6 +230,17 @@ const useTableColumns = (
           return (
             <div className="flex gap-2 justify-center">
               <Button
+                variant={"blue"}
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  onViewAttendees(row.original?.id);
+                }}
+                className="p-2 rounded-full"
+              >
+                <AttendeesIcon className="h-4 w-4" />
+              </Button>
+              <Button
                 variant={"outline"}
                 onClick={(e) => {
                   e.preventDefault();
@@ -237,6 +268,6 @@ const useTableColumns = (
         },
       },
     ],
-    [onDelete, onEdit, isDeleteEventLoading],
+    [onDelete, onEdit, isDeleteEventLoading, onViewAttendees],
   );
 };

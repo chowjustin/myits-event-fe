@@ -23,3 +23,11 @@ export type UpdateEventRequest = {
   end_time?: string;
   event_type?: "online" | "offline";
 };
+
+export interface Attendee {
+  user_id: string;
+  user_name: string;
+  event_id: string;
+  event_name: string;
+  attended_at: string;
+}
