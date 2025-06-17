@@ -240,6 +240,11 @@ const useTableColumns = (
         cell: ({ row }) => <p>{parseToWIB(row.original?.end_time)}</p>,
       },
       {
+        accessorKey: "duration",
+        header: "Durasi (menit)",
+        cell: ({ row }) => <p>{row.original?.duration}</p>,
+      },
+      {
         accessorKey: "event_type",
         header: "Tipe Event",
         cell: ({ row }) => <p>{row.original?.event_type}</p>,
