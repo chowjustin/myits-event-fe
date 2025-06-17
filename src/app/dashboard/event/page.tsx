@@ -18,6 +18,7 @@ import { parseToWIB } from "@/utils/parseToWib";
 import AttendeesModal from "./components/AttendeesModal";
 import { Users as AttendeesIcon } from "lucide-react";
 import useAuthStore from "@/app/stores/useAuthStore";
+import AllAttendeesModal from "./components/AllAttendeesModal";
 
 const breadCrumbs = [
   { href: "/dashboard", Title: "Dashboard" },
@@ -43,10 +44,13 @@ function Event() {
   >(null);
   const [isAttendeesModalOpen, setIsAttendeesModalOpen] =
     React.useState<boolean>(false);
+  const [isAllAttendeesModalOpen, setIsAllAttendeesModalOpen] =
+    React.useState<boolean>(false);
   const [queryParams, setQueryParams] =
     React.useState<EventQueryParams>(DEFAULT_QUERY_PARAMS);
 
   const { user } = useAuthStore();
+
   const {
     data: events,
     isLoading: getEventsLoading,
@@ -128,8 +132,8 @@ function Event() {
       <CreateEventCard />
 
       <div className="bg-white rounded-lg shadow p-6 border border-gray-200">
-        <h2 className="text-2xl font-semibold mb-4 flex justify-between items-center gap-3">
-          <div className="flex gap-2 items-center">
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-2xl font-semibold flex items-center gap-3">
             <Users
               size={24}
               className="text-primary-base max-lg:max-w-[20px]"
@@ -137,18 +141,31 @@ function Event() {
             <h2 className="text-2xl max-lg:text-lg font-semibold">
               Event Kamu
             </h2>
-          </div>
-          <span className="text-base font-medium">
-            Event yang kamu buat:{" "}
-            {
-              tableData.filter((event) => event.created_by === user?.name)
-                .length
-            }
-          </span>
-        </h2>
+          </h2>
+          {user?.role === "admin" ? (
+            <Button
+              variant="outline"
+              onClick={() => setIsAllAttendeesModalOpen(true)}
+            >
+              Lihat Semua Peserta
+            </Button>
+          ) : (
+            <span className="text-base font-medium">
+              Event yang kamu buat:{" "}
+              {
+                tableData.filter((event) => event.created_by === user?.name)
+                  .length
+              }
+            </span>
+          )}
+        </div>
         <Table
           className="text-black"
-          data={tableData.filter((event) => event.created_by === user?.name)}
+          data={
+            user?.role === "admin"
+              ? tableData
+              : tableData.filter((event) => event.created_by === user?.name)
+          }
           columns={columns}
           withFilter
           withEntries
@@ -182,6 +199,11 @@ function Event() {
         isOpen={isAttendeesModalOpen}
         setIsOpen={setIsAttendeesModalOpen}
         eventId={eventToViewAttendees}
+      />
+
+      <AllAttendeesModal
+        isOpen={isAllAttendeesModalOpen}
+        setIsOpen={setIsAllAttendeesModalOpen}
       />
     </section>
   );
