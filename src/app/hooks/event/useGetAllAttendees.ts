@@ -21,6 +21,7 @@ export interface AllAttendeesApiResponse {
 
 export default function useGetAllAttendees(
   queryParams: AllAttendeesQueryParams,
+  role: string,
 ) {
   return useQuery<AllAttendeesApiResponse>({
     queryKey: ["all-attendees", queryParams],
@@ -30,6 +31,7 @@ export default function useGetAllAttendees(
       });
       return response.data;
     },
+    enabled: role === "admin", // Only fetch if the user is an admin
     staleTime: 5 * 60 * 1000, // 5 minutes
     refetchOnWindowFocus: false,
   });

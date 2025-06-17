@@ -3,7 +3,7 @@
 import { ColumnDef } from "@tanstack/react-table";
 import * as React from "react";
 import Table from "@/components/table/Table";
-import { Edit, Trash2, Users } from "lucide-react";
+import { Edit, ListChecks, Trash2, Users } from "lucide-react";
 
 import withAuth from "@/components/hoc/withAuth";
 import Button from "@/components/buttons/Button";
@@ -19,6 +19,8 @@ import AttendeesModal from "./components/AttendeesModal";
 import { Users as AttendeesIcon } from "lucide-react";
 import useAuthStore from "@/app/stores/useAuthStore";
 import AllAttendeesModal from "./components/AllAttendeesModal";
+import InviteesModal from "./components/InviteesModal";
+import { on } from "events";
 
 const breadCrumbs = [
   { href: "/dashboard", Title: "Dashboard" },
@@ -43,6 +45,8 @@ function Event() {
     string | null
   >(null);
   const [isAttendeesModalOpen, setIsAttendeesModalOpen] =
+    React.useState<boolean>(false);
+  const [isInviteesModalOpen, setIsInviteesModalOpen] =
     React.useState<boolean>(false);
   const [isAllAttendeesModalOpen, setIsAllAttendeesModalOpen] =
     React.useState<boolean>(false);
@@ -88,6 +92,11 @@ function Event() {
     setIsAttendeesModalOpen(true);
   };
 
+  const handleViewInvitees = (eventId: string) => {
+    setEventToViewAttendees(eventId);
+    setIsInviteesModalOpen(true);
+  };
+
   const handleTableParamsChange = (
     page: number,
     pageSize: number,
@@ -108,6 +117,7 @@ function Event() {
     handleEditEvent,
     isDeleteEventLoading,
     handleViewAttendees,
+    handleViewInvitees,
   );
 
   if (error) {
@@ -201,6 +211,12 @@ function Event() {
         eventId={eventToViewAttendees}
       />
 
+      <InviteesModal
+        isOpen={isInviteesModalOpen}
+        setIsOpen={setIsInviteesModalOpen}
+        eventId={eventToViewAttendees}
+      />
+
       <AllAttendeesModal
         isOpen={isAllAttendeesModalOpen}
         setIsOpen={setIsAllAttendeesModalOpen}
@@ -214,6 +230,7 @@ const useTableColumns = (
   onEdit: (event: EventType) => void,
   isDeleteEventLoading: boolean,
   onViewAttendees: (eventId: string) => void,
+  onViewInvitees: (eventId: string) => void,
 ) => {
   return React.useMemo<ColumnDef<any>[]>(
     () => [
@@ -272,6 +289,17 @@ const useTableColumns = (
                 className="p-2 rounded-full"
               >
                 <AttendeesIcon className="h-4 w-4" />
+              </Button>
+              <Button
+                variant={"yellow"}
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  onViewInvitees(row.original?.id);
+                }}
+                className="p-2 rounded-full"
+              >
+                <ListChecks className="h-4 w-4" />
               </Button>
               <Button
                 variant={"outline"}

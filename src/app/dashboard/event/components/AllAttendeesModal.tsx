@@ -12,6 +12,7 @@ import useGetAllAttendees, {
 import { Attendee } from "@/types/event";
 import { parseToWIB } from "@/utils/parseToWib";
 import Button from "@/components/buttons/Button";
+import useAuthStore from "@/app/stores/useAuthStore";
 
 interface AllAttendeesModalProps {
   isOpen: boolean;
@@ -30,7 +31,12 @@ export default function AllAttendeesModal({
   const [queryParams, setQueryParams] =
     React.useState<AllAttendeesQueryParams>(DEFAULT_QUERY_PARAMS);
 
-  const { data: response, isLoading } = useGetAllAttendees(queryParams);
+  const { user } = useAuthStore();
+
+  const { data: response, isLoading } = useGetAllAttendees(
+    queryParams,
+    user?.role!,
+  );
 
   const tableData = React.useMemo(() => response?.data || [], [response]);
   const totalPages = response?.meta?.max_page || 1;
