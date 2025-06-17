@@ -16,3 +16,12 @@ export type BookingRequest = {
   requested_by: string;
   rooms: Room[];
 };
+
+export type BookingRequestWithCapacity = {
+  booking_request_id: string;
+  status: "pending" | "approved" | "rejected";
+  event_name: string;
+  room_name: string;
+  room_capacity: number;
+  requested_at: string;
+};

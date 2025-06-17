@@ -11,11 +11,15 @@ import {
   Filter,
   Users,
   Trash2,
+  Eye,
 } from "lucide-react";
 import clsxm from "@/lib/clsxm";
 import withAuth from "@/components/hoc/withAuth";
 import RoomRequestDetailModal from "./components/BookingDetailModal";
-import { BookingRequest } from "@/types/booking-request";
+import {
+  BookingRequest,
+  BookingRequestWithCapacity,
+} from "@/types/booking-request";
 import useGetBookingRequests from "@/app/hooks/booking-request/useGetBookingReq";
 import { ColumnDef } from "@tanstack/react-table";
 import Table from "@/components/table/Table";
@@ -25,13 +29,19 @@ import useAuthStore from "@/app/stores/useAuthStore";
 import api from "@/lib/api";
 import toast from "react-hot-toast";
 import { Edit } from "lucide-react";
+import BookingRequestDetailModal from "./components/BookingRequestDetailModal";
+import useGetBookingRequestsWithCapacity from "@/app/hooks/booking-request/useGetBookingRequestsWithCapacity";
 
 export default withAuth(RoomRequestListPage, "departemen");
 function RoomRequestListPage() {
   const [selectedRequest, setSelectedRequest] = useState<BookingRequest | null>(
     null,
   );
+  const [selectedRequestWithCapacity, setSelectedRequestWithCapacity] =
+    useState<BookingRequestWithCapacity | null>(null);
+
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isCapacityModalOpen, setIsCapacityModalOpen] = useState(false);
   const [isConfirmDeleteDialogOpen, setIsConfirmDeleteDialogOpen] =
     useState(false);
   const [requestToDelete, setRequestToDelete] = useState<string | null>(null);
@@ -44,6 +54,8 @@ function RoomRequestListPage() {
   const queryClient = useQueryClient();
 
   const { data: requestsResponse, isLoading, error } = useGetBookingRequests();
+  const { data: requestsWithCapacityResponse } =
+    useGetBookingRequestsWithCapacity();
 
   const { mutate: deleteBookingRequestMutation, isPending: isDeleteLoading } =
     useMutation({
@@ -64,10 +76,16 @@ function RoomRequestListPage() {
     });
 
   const requests = requestsResponse?.data || [];
+  const requestsWithCapacity = requestsWithCapacityResponse?.data || [];
 
   const handleRequestClick = (request: BookingRequest) => {
     setSelectedRequest(request);
     setIsModalOpen(true);
+  };
+
+  const handleCapacityModalClick = (request: BookingRequestWithCapacity) => {
+    setSelectedRequestWithCapacity(request);
+    setIsCapacityModalOpen(true);
   };
 
   const handleDeleteClick = (bookingId: string) => {
@@ -177,6 +195,52 @@ function RoomRequestListPage() {
               <Trash2 className="h-4 w-4" />
             </Button>
           )}
+        </div>
+      ),
+    },
+  ];
+
+  const columnsWithCapacity: ColumnDef<BookingRequestWithCapacity>[] = [
+    {
+      accessorKey: "event_name",
+      header: "Nama Event",
+    },
+    {
+      accessorKey: "room_name",
+      header: "Nama Ruangan",
+    },
+    {
+      accessorKey: "room_capacity",
+      header: "Kapasitas",
+      cell: ({ row }) => (
+        <div className="flex items-center gap-2">
+          <Users className="h-4 w-4" />
+          {row.original.room_capacity}
+        </div>
+      ),
+    },
+    {
+      accessorKey: "status",
+      header: "Status",
+      cell: ({ row }) => getStatusBadge(row.original.status),
+    },
+    {
+      accessorKey: "requested_at",
+      header: "Waktu Request",
+      cell: ({ row }) => new Date(row.original.requested_at).toLocaleString(),
+    },
+    {
+      id: "actions",
+      header: "Aksi",
+      cell: ({ row }) => (
+        <div className="flex gap-2 justify-center">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => handleCapacityModalClick(row.original)}
+          >
+            <Eye className="h-4 w-4" />
+          </Button>
         </div>
       ),
     },
@@ -301,18 +365,31 @@ function RoomRequestListPage() {
             </div>
           </div>
         </div>
-        <Table
-          columns={columns}
-          data={filteredRequests}
-          withPaginationControl
-          withFilter
-        />
-
+        {user?.role === "admin" ? (
+          <Table
+            columns={columnsWithCapacity}
+            data={requestsWithCapacity}
+            withPaginationControl
+            withFilter
+          />
+        ) : (
+          <Table
+            columns={columns}
+            data={filteredRequests}
+            withPaginationControl
+            withFilter
+          />
+        )}
         {/* Modal */}
         <RoomRequestDetailModal
           isOpen={isModalOpen}
           setIsOpen={setIsModalOpen}
           request={selectedRequest}
+        />
+        <BookingRequestDetailModal
+          isOpen={isCapacityModalOpen}
+          setIsOpen={setIsCapacityModalOpen}
+          request={selectedRequestWithCapacity}
         />
         <ConfirmationDialog
           isOpen={isConfirmDeleteDialogOpen}
