@@ -15,6 +15,9 @@ import useDeleteEventMutation from "@/app/hooks/event/useDeleteEventMutation";
 import CreateEventCard from "./components/CreateEventCard";
 import EditEventDialog from "./components/EditEventDialog";
 import { parseToWIB } from "@/utils/parseToWib";
+import AttendeesModal from "./components/AttendeesModal";
+import { Users as AttendeesIcon } from "lucide-react";
+import useAuthStore from "@/app/stores/useAuthStore";
 
 const breadCrumbs = [
   { href: "/dashboard", Title: "Dashboard" },
@@ -35,9 +38,15 @@ function Event() {
     React.useState<boolean>(false);
   const [isEditDialogOpen, setIsEditDialogOpen] =
     React.useState<boolean>(false);
+  const [eventToViewAttendees, setEventToViewAttendees] = React.useState<
+    string | null
+  >(null);
+  const [isAttendeesModalOpen, setIsAttendeesModalOpen] =
+    React.useState<boolean>(false);
   const [queryParams, setQueryParams] =
     React.useState<EventQueryParams>(DEFAULT_QUERY_PARAMS);
 
+  const { user } = useAuthStore();
   const {
     data: events,
     isLoading: getEventsLoading,
@@ -70,6 +79,11 @@ function Event() {
     }
   };
 
+  const handleViewAttendees = (eventId: string) => {
+    setEventToViewAttendees(eventId);
+    setIsAttendeesModalOpen(true);
+  };
+
   const handleTableParamsChange = (
     page: number,
     pageSize: number,
@@ -89,6 +103,7 @@ function Event() {
     handleDeleteEvent,
     handleEditEvent,
     isDeleteEventLoading,
+    handleViewAttendees,
   );
 
   if (error) {
@@ -124,12 +139,16 @@ function Event() {
             </h2>
           </div>
           <span className="text-base font-medium">
-            Event yang kamu buat: {tableData.length}
+            Event yang kamu buat:{" "}
+            {
+              tableData.filter((event) => event.created_by === user?.name)
+                .length
+            }
           </span>
         </h2>
         <Table
           className="text-black"
-          data={tableData}
+          data={tableData.filter((event) => event.created_by === user?.name)}
           columns={columns}
           withFilter
           withEntries
@@ -158,6 +177,12 @@ function Event() {
         setIsOpen={setIsEditDialogOpen}
         event={eventToEdit}
       />
+
+      <AttendeesModal
+        isOpen={isAttendeesModalOpen}
+        setIsOpen={setIsAttendeesModalOpen}
+        eventId={eventToViewAttendees}
+      />
     </section>
   );
 }
@@ -166,6 +191,7 @@ const useTableColumns = (
   onDelete: (eventId: string) => void,
   onEdit: (event: EventType) => void,
   isDeleteEventLoading: boolean,
+  onViewAttendees: (eventId: string) => void,
 ) => {
   return React.useMemo<ColumnDef<any>[]>(
     () => [
@@ -192,6 +218,11 @@ const useTableColumns = (
         cell: ({ row }) => <p>{parseToWIB(row.original?.end_time)}</p>,
       },
       {
+        accessorKey: "duration",
+        header: "Durasi (menit)",
+        cell: ({ row }) => <p>{row.original?.duration}</p>,
+      },
+      {
         accessorKey: "event_type",
         header: "Tipe Event",
         cell: ({ row }) => <p>{row.original?.event_type}</p>,
@@ -209,6 +240,17 @@ const useTableColumns = (
         cell: ({ row }) => {
           return (
             <div className="flex gap-2 justify-center">
+              <Button
+                variant={"blue"}
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  onViewAttendees(row.original?.id);
+                }}
+                className="p-2 rounded-full"
+              >
+                <AttendeesIcon className="h-4 w-4" />
+              </Button>
               <Button
                 variant={"outline"}
                 onClick={(e) => {
@@ -237,6 +279,6 @@ const useTableColumns = (
         },
       },
     ],
-    [onDelete, onEdit, isDeleteEventLoading],
+    [onDelete, onEdit, isDeleteEventLoading, onViewAttendees],
   );
 };
