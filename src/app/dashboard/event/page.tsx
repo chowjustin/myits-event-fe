@@ -62,7 +62,7 @@ function Event() {
 
   const tableData = React.useMemo(
     () => (getEventsLoading ? [] : events?.data?.data || []),
-    [getEventsLoading, events?.data?.data]
+    [getEventsLoading, events?.data?.data],
   );
 
   const totalPages = events?.max_page || 1;
@@ -92,7 +92,7 @@ function Event() {
     page: number,
     pageSize: number,
     orderBy?: string,
-    isAsc?: boolean
+    isAsc?: boolean,
   ) => {
     setQueryParams((prev) => ({
       ...prev,
@@ -107,7 +107,7 @@ function Event() {
     handleDeleteEvent,
     handleEditEvent,
     isDeleteEventLoading,
-    handleViewAttendees
+    handleViewAttendees,
   );
 
   if (error) {
@@ -142,18 +142,30 @@ function Event() {
               Event Kamu
             </h2>
           </h2>
-          {user?.role === "admin" && (
+          {user?.role === "admin" ? (
             <Button
               variant="outline"
               onClick={() => setIsAllAttendeesModalOpen(true)}
             >
               Lihat Semua Peserta
             </Button>
+          ) : (
+            <span className="text-base font-medium">
+              Event yang kamu buat:{" "}
+              {
+                tableData.filter((event) => event.created_by === user?.name)
+                  .length
+              }
+            </span>
           )}
         </div>
         <Table
           className="text-black"
-          data={tableData}
+          data={
+            user?.role === "admin"
+              ? tableData
+              : tableData.filter((event) => event.created_by === user?.name)
+          }
           columns={columns}
           withFilter
           withEntries
@@ -201,7 +213,7 @@ const useTableColumns = (
   onDelete: (eventId: string) => void,
   onEdit: (event: EventType) => void,
   isDeleteEventLoading: boolean,
-  onViewAttendees: (eventId: string) => void
+  onViewAttendees: (eventId: string) => void,
 ) => {
   return React.useMemo<ColumnDef<any>[]>(
     () => [
@@ -284,6 +296,6 @@ const useTableColumns = (
         },
       },
     ],
-    [onDelete, onEdit, isDeleteEventLoading, onViewAttendees]
+    [onDelete, onEdit, isDeleteEventLoading, onViewAttendees],
   );
 };
