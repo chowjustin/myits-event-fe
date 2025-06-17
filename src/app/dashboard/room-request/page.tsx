@@ -1,5 +1,6 @@
 "use client";
 
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import {
   Clock,
@@ -9,12 +10,21 @@ import {
   Search,
   Filter,
   Users,
+  Trash2,
 } from "lucide-react";
 import clsxm from "@/lib/clsxm";
 import withAuth from "@/components/hoc/withAuth";
 import RoomRequestDetailModal from "./components/BookingDetailModal";
 import { BookingRequest } from "@/types/booking-request";
 import useGetBookingRequests from "@/app/hooks/booking-request/useGetBookingReq";
+import { ColumnDef } from "@tanstack/react-table";
+import Table from "@/components/table/Table";
+import Button from "@/components/buttons/Button";
+import ConfirmationDialog from "@/components/ConfirmationDialog";
+import useAuthStore from "@/app/stores/useAuthStore";
+import api from "@/lib/api";
+import toast from "react-hot-toast";
+import { Edit } from "lucide-react";
 
 export default withAuth(RoomRequestListPage, "departemen");
 function RoomRequestListPage() {
@@ -22,18 +32,53 @@ function RoomRequestListPage() {
     null,
   );
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isConfirmDeleteDialogOpen, setIsConfirmDeleteDialogOpen] =
+    useState(false);
+  const [requestToDelete, setRequestToDelete] = useState<string | null>(null);
+
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState<
     "all" | "pending" | "approved" | "rejected"
   >("all");
+  const { user } = useAuthStore();
+  const queryClient = useQueryClient();
 
   const { data: requestsResponse, isLoading, error } = useGetBookingRequests();
+
+  const { mutate: deleteBookingRequestMutation, isPending: isDeleteLoading } =
+    useMutation({
+      mutationFn: async (bookingId: string) => {
+        return await api.delete(`/booking-request/${bookingId}`);
+      },
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ["booking-requests"] });
+        toast.success("Booking request berhasil dihapus");
+        setIsConfirmDeleteDialogOpen(false);
+      },
+      onError: (error: any) => {
+        const errorMessage =
+          error?.response?.data?.error || "Gagal menghapus booking request";
+        toast.error(errorMessage);
+        setIsConfirmDeleteDialogOpen(false);
+      },
+    });
 
   const requests = requestsResponse?.data || [];
 
   const handleRequestClick = (request: BookingRequest) => {
     setSelectedRequest(request);
     setIsModalOpen(true);
+  };
+
+  const handleDeleteClick = (bookingId: string) => {
+    setRequestToDelete(bookingId);
+    setIsConfirmDeleteDialogOpen(true);
+  };
+
+  const confirmDelete = () => {
+    if (requestToDelete) {
+      deleteBookingRequestMutation(requestToDelete);
+    }
   };
 
   const getStatusBadge = (status: string) => {
@@ -72,6 +117,70 @@ function RoomRequestListPage() {
       statusFilter === "all" || request.booking_status === statusFilter;
     return matchesSearch && matchesStatus;
   });
+
+  const columns: ColumnDef<BookingRequest>[] = [
+    {
+      accessorKey: "event_name",
+      header: "Nama Event",
+    },
+    {
+      accessorKey: "requested_by",
+      header: "Dipesan oleh",
+    },
+    {
+      accessorKey: "booking_status",
+      header: "Status",
+      cell: ({ row }) => getStatusBadge(row.original.booking_status),
+    },
+    {
+      accessorKey: "rooms",
+      header: "Ruangan",
+      cell: ({ row }) => (
+        <div className="flex flex-wrap gap-1">
+          {row.original.rooms.slice(0, 2).map((room) => (
+            <span
+              key={room.room_id}
+              className="inline-block px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded"
+            >
+              {room.room_name}
+            </span>
+          ))}
+          {row.original.rooms.length > 2 && (
+            <span className="inline-block px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded">
+              +{row.original.rooms.length - 2} lainnya
+            </span>
+          )}
+        </div>
+      ),
+    },
+    {
+      id: "actions",
+      header: "Aksi",
+      cell: ({ row }) => (
+        <div className="flex gap-2 justify-center">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => handleRequestClick(row.original)}
+          >
+            <Edit className="h-4 w-4" />
+          </Button>
+          {user?.role === "admin" && (
+            <Button
+              variant="red"
+              size="sm"
+              isLoading={
+                isDeleteLoading && requestToDelete === row.original.booking_id
+              }
+              onClick={() => handleDeleteClick(row.original.booking_id)}
+            >
+              <Trash2 className="h-4 w-4" />
+            </Button>
+          )}
+        </div>
+      ),
+    },
+  ];
 
   const pendingCount = requests.filter(
     (req) => req.booking_status === "pending",
@@ -192,93 +301,24 @@ function RoomRequestListPage() {
             </div>
           </div>
         </div>
-
-        {/* Request List */}
-        {filteredRequests.length === 0 ? (
-          <div className="text-center py-12">
-            <Building className="h-16 w-16 text-gray-300 mx-auto mb-4" />
-            <h3 className="text-lg font-medium text-gray-900 mb-2">
-              {searchTerm || statusFilter !== "all"
-                ? "Tidak ada permintaan yang cocok"
-                : "Belum ada permintaan ruangan"}
-            </h3>
-            <p className="text-gray-600">
-              {searchTerm || statusFilter !== "all"
-                ? "Coba ubah pencarian atau filter Anda"
-                : "Permintaan ruangan baru akan muncul di sini"}
-            </p>
-          </div>
-        ) : (
-          <div className="space-y-4">
-            {filteredRequests.map((request) => (
-              <div
-                key={request.booking_id}
-                onClick={() => handleRequestClick(request)}
-                className={clsxm(
-                  "bg-white rounded-lg p-6 shadow-sm border cursor-pointer transition-all duration-200 hover:shadow-md hover:border-primary-300",
-                  request.booking_status === "pending" &&
-                    "border-l-4 border-l-yellow-400",
-                  request.booking_status === "approved" &&
-                    "border-l-4 border-l-green-400",
-                  request.booking_status === "rejected" &&
-                    "border-l-4 border-l-red-400",
-                )}
-              >
-                <div className="flex items-start justify-between">
-                  <div className="flex-1">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                      {request.event_name}
-                    </h3>
-                    <div className="flex items-center gap-4 text-sm text-gray-600 mb-3">
-                      <div className="flex items-center gap-1">
-                        <Users size={14} />
-                        <span>Diminta oleh: {request.requested_by}</span>
-                      </div>
-                      <div className="flex items-center gap-1">
-                        <Building size={14} />
-                        <span>{request.rooms.length} ruangan</span>
-                      </div>
-                    </div>
-                    <div className="mb-3">
-                      <p className="text-sm text-gray-600 mb-1">
-                        Ruangan yang diminta:
-                      </p>
-                      <div className="flex flex-wrap gap-1">
-                        {request.rooms.slice(0, 3).map((room) => (
-                          <span
-                            key={room.room_id}
-                            className="inline-block px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded"
-                          >
-                            {room.room_name}
-                          </span>
-                        ))}
-                        {request.rooms.length > 3 && (
-                          <span className="inline-block px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded">
-                            +{request.rooms.length - 3} lainnya
-                          </span>
-                        )}
-                      </div>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      {getStatusBadge(request.booking_status)}
-                      {request.booking_status === "pending" && (
-                        <span className="text-sm text-primary-600 font-medium">
-                          Klik untuk tinjau →
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
+        <Table
+          columns={columns}
+          data={filteredRequests}
+          withPaginationControl
+          withFilter
+        />
 
         {/* Modal */}
         <RoomRequestDetailModal
           isOpen={isModalOpen}
           setIsOpen={setIsModalOpen}
           request={selectedRequest}
+        />
+        <ConfirmationDialog
+          isOpen={isConfirmDeleteDialogOpen}
+          setIsOpen={setIsConfirmDeleteDialogOpen}
+          message="Apakah Anda yakin ingin menghapus permintaan booking ini?"
+          onConfirm={confirmDelete}
         />
       </div>
     </div>

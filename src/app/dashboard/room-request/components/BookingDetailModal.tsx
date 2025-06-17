@@ -97,6 +97,8 @@ export default function RoomRequestDetailModal({
 
   if (!request) return null;
 
+  const isDecided = request.booking_status !== "pending";
+
   return (
     <Dialog open={isOpen} onClose={handleClose} className="relative z-50">
       <div className="fixed inset-0 flex items-center justify-center bg-black/50 px-4">
@@ -189,63 +191,63 @@ export default function RoomRequestDetailModal({
                 </div>
               </div>
 
-              {request.booking_status === "pending" && (
-                <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-                  <h3 className="font-medium text-yellow-900 mb-3">
-                    Tindakan Admintstrator
-                  </h3>
-                  <p className="text-sm text-yellow-800 mb-4">
-                    Silakan tinjau permintaan ruangan ini dan berikan keputusan:
-                  </p>
-
-                  <div className="flex gap-3">
-                    <Button
-                      type="button"
-                      variant="primary"
-                      onClick={handleAccept}
-                      disabled={isAccepting || isRejecting}
-                      className="flex-1 flex items-center justify-center gap-2"
-                    >
-                      <Check size={16} />
-                      {isAccepting ? "Memproses..." : "Setujui"}
-                    </Button>
-                    <Button
-                      type="button"
-                      variant="outline"
-                      onClick={handleReject}
-                      disabled={isAccepting || isRejecting}
-                      className="flex-1 flex items-center justify-center gap-2 border-red-300 text-red-700 hover:bg-red-50"
-                    >
-                      <XCircle size={16} />
-                      {isRejecting ? "Memproses..." : "Tolak"}
-                    </Button>
-                  </div>
-                </div>
-              )}
-
-              {request.booking_status !== "pending" && (
-                <div
+              <div
+                className={clsxm(
+                  "rounded-lg p-4 border",
+                  request.booking_status === "pending" &&
+                    "bg-yellow-50 border-yellow-200",
+                  request.booking_status === "approved" &&
+                    "bg-green-50 border-green-200",
+                  request.booking_status === "rejected" &&
+                    "bg-red-50 border-red-200",
+                )}
+              >
+                <h3
                   className={clsxm(
-                    "rounded-lg p-4 border",
-                    request.booking_status === "approved"
-                      ? "bg-green-50 border-green-200"
-                      : "bg-red-50 border-red-200",
+                    "font-medium mb-3",
+                    request.booking_status === "pending" && "text-yellow-900",
+                    request.booking_status === "approved" && "text-green-800",
+                    request.booking_status === "rejected" && "text-red-800",
                   )}
                 >
-                  <p
-                    className={clsxm(
-                      "text-sm font-medium",
-                      request.booking_status === "approved"
-                        ? "text-green-800"
-                        : "text-red-800",
-                    )}
+                  Tindakan Administrator
+                </h3>
+                <p
+                  className={clsxm(
+                    "text-sm mb-4",
+                    request.booking_status === "pending" && "text-yellow-800",
+                    request.booking_status === "approved" && "text-green-800",
+                    request.booking_status === "rejected" && "text-red-800",
+                  )}
+                >
+                  {isDecided
+                    ? `Permintaan ini telah ${request.booking_status === "approved" ? "disetujui" : "ditolak"}.`
+                    : "Silakan tinjau permintaan ruangan ini dan berikan keputusan:"}
+                </p>
+
+                <div className="flex gap-3">
+                  <Button
+                    type="button"
+                    variant="primary"
+                    onClick={handleAccept}
+                    disabled={isAccepting || isRejecting}
+                    className="flex-1 flex items-center justify-center gap-2"
                   >
-                    {request.booking_status === "approved"
-                      ? "Permintaan ruangan ini telah disetujui"
-                      : "Permintaan ruangan ini telah ditolak"}
-                  </p>
+                    <Check size={16} />
+                    {isAccepting ? "Memproses..." : "Setujui"}
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={handleReject}
+                    disabled={isAccepting || isRejecting}
+                    className="flex-1 flex items-center justify-center gap-2 border-red-300 text-red-700 hover:bg-red-50"
+                  >
+                    <XCircle size={16} />
+                    {isRejecting ? "Memproses..." : "Tolak"}
+                  </Button>
                 </div>
-              )}
+              </div>
             </div>
 
             <div className="flex justify-end">

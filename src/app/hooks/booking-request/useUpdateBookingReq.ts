@@ -25,7 +25,7 @@ export default function useUpdateBookingRequest({
     },
     onError: (error: any) => {
       const errorMessage =
-        error?.response?.data?.message || "Gagal memperbarui booking request";
+        error?.response?.data?.error || "Gagal memperbarui booking request";
       toast.error(errorMessage);
     },
   });
