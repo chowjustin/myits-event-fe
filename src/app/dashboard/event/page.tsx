@@ -17,6 +17,7 @@ import EditEventDialog from "./components/EditEventDialog";
 import { parseToWIB } from "@/utils/parseToWib";
 import AttendeesModal from "./components/AttendeesModal";
 import { Users as AttendeesIcon } from "lucide-react";
+import useAuthStore from "@/app/stores/useAuthStore";
 
 const breadCrumbs = [
   { href: "/dashboard", Title: "Dashboard" },
@@ -45,6 +46,7 @@ function Event() {
   const [queryParams, setQueryParams] =
     React.useState<EventQueryParams>(DEFAULT_QUERY_PARAMS);
 
+  const { user } = useAuthStore();
   const {
     data: events,
     isLoading: getEventsLoading,
@@ -137,12 +139,16 @@ function Event() {
             </h2>
           </div>
           <span className="text-base font-medium">
-            Event yang kamu buat: {tableData.length}
+            Event yang kamu buat:{" "}
+            {
+              tableData.filter((event) => event.created_by === user?.name)
+                .length
+            }
           </span>
         </h2>
         <Table
           className="text-black"
-          data={tableData}
+          data={tableData.filter((event) => event.created_by === user?.name)}
           columns={columns}
           withFilter
           withEntries
@@ -210,6 +216,11 @@ const useTableColumns = (
         accessorKey: "end_time",
         header: "Tanggal Selesai",
         cell: ({ row }) => <p>{parseToWIB(row.original?.end_time)}</p>,
+      },
+      {
+        accessorKey: "duration",
+        header: "Durasi (menit)",
+        cell: ({ row }) => <p>{row.original?.duration}</p>,
       },
       {
         accessorKey: "event_type",
